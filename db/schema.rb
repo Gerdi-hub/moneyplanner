@@ -10,17 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_03_123008) do
-  create_table "expenses", force: :cascade do |t|
-    t.decimal "amount"
-    t.string "description"
-    t.integer "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_expenses_on_user_id"
-  end
-
-  create_table "incomes", force: :cascade do |t|
+ActiveRecord::Schema[8.0].define(version: 2025_01_03_132134) do
+  create_table "cashflows", force: :cascade do |t|
     t.decimal "amount"
     t.string "description"
     t.integer "user_id", null: false
@@ -28,7 +19,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_03_123008) do
     t.datetime "updated_at", null: false
     t.date "date"
     t.datetime "deleted_at"
-    t.index ["user_id"], name: "index_incomes_on_user_id"
+    t.index ["user_id"], name: "index_cashflows_on_user_id"
+  end
+
+  create_table "expenses", force: :cascade do |t|
+    t.decimal "amount"
+    t.string "description"
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_expenses_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -45,6 +45,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_03_123008) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "cashflows", "users"
   add_foreign_key "expenses", "users"
-  add_foreign_key "incomes", "users"
 end

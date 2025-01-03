@@ -1,11 +1,11 @@
 <h1>Edit Income</h1>
 
-<%= form_with model: @income, local: true do |form| %>
-  <% if @income.errors.any? %>
+<%= form_with model: @cashflow, local: true do |form| %>
+  <% if @cashflow.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@income.errors.count, "error") %> prohibited this income from being saved:</h2>
+      <h2><%= pluralize(@cashflow.errors.count, "error") %> prohibited this income from being saved:</h2>
       <ul>
-        <% @income.errors.full_messages.each do |message| %>
+        <% @cashflow.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
       </ul>
@@ -28,7 +28,7 @@
   </div>
 
   <div class="actions">
-    <%= form.submit "Update Income" %>
+    <%= form.submit "Update Cashflow" %>
   </div>
 <% end %>
 

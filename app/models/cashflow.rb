@@ -1,6 +1,6 @@
-class Income < ApplicationRecord
+class Cashflow < ApplicationRecord
   belongs_to :user
-  validates :amount, presence: true, numericality: { greater_than: 0 }
+  validates :amount, presence: true
   validates :description, presence: true
 
   # Soft delete functionality
@@ -12,7 +12,7 @@ class Income < ApplicationRecord
     update(deleted_at: Time.current)
   end
 
-  # Restore income
+  # Restore cashflow
   def restore
     update(deleted_at: nil)
   end
