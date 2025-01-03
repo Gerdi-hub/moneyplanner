@@ -1,0 +1,7 @@
+<h1>Moneyplanner</h1>
+
+<% if user_signed_in? %>
+  <%= button_to "Add Income", new_income_path, method: :get, class: "btn btn-primary" %>
+
+<% end %>
+
