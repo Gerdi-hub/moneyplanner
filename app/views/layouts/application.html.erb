@@ -29,23 +29,41 @@
   <div class="container-fluid">
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <%= link_to 'Home', root_path , class: "nav-link" %>
-    <%= link_to 'Cashflow', cashflows_path , class: "nav-link"  %>
-    <%= link_to 'Keywords', keywords_path , class: "nav-link"  %>
-    <% if user_signed_in? %>
-      <%= button_to "Add Cashflow", new_cashflow_path, method: :get, class: "nav-link" %>
+    <div class="container-fluid d-flex justify-content-between">
+      <!-- Left Section -->
+      <div class="d-flex">
+        <%= link_to 'Home', root_path, class: "navbar-brand me-3" %>
+        <ul class="navbar-nav d-flex flex-row">
+          <li class="nav-item">
+            <%= link_to 'Cashflow', cashflows_path, class: "nav-link me-3" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Keywords', keywords_path, class: "nav-link me-3" %>
+          </li>
+          <% if user_signed_in? %>
+            <li class="nav-item">
+              <%= button_to "Add Cashflow", new_cashflow_path, method: :get, class: "btn btn-outline-primary nav-link me-3" %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
 
-    <% end %>
-
-  <% if user_signed_in? %>
-    <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "nav-link"  %>
-  <% else %>
-    <%= link_to "Sign in", new_user_session_path , class: "nav-link" %>
-    <%= link_to "Sign up", new_user_registration_path, class: "nav-link"  %>
-  <% end %>
+      <!-- Right Section -->
+      <div class="d-flex">
+        <% if user_signed_in? %>
+          <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger me-2" %>
+        <% else %>
+          <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-primary me-2" %>
+          <%= link_to "Sign up", new_user_registration_path, class: "btn btn-outline-success" %>
+        <% end %>
+      </div>
+    </div>
   </nav>
 
-    <%= yield %>
+
+
+
+  <%= yield %>
 </header>
   </div>
 

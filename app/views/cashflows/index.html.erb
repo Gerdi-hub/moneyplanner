@@ -7,6 +7,7 @@
     <th>Description</th>
     <th>Date</th>
     <th>Credit/Debit</th>
+    <th>Type</th>
     <th>Actions</th>
   </tr>
   </thead>
@@ -17,6 +18,7 @@
       <td><%= cashflow.description %></td>
       <td><%= cashflow.date %></td>
       <td><%= cashflow.credit_debit %></td>
+      <td><%= cashflow.type_name %></td>
       <td>
         <div class="d-flex">
         <%= link_to "Edit", edit_cashflow_path(cashflow), class: "btn btn-outline-secondary btn-sm me-2" %>
