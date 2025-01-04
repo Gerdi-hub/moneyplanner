@@ -26,16 +26,26 @@
 
   <body>
   <div class="container-fluid">
+<header>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <%= link_to 'Home', root_path , class: "nav-link" %>
+    <%= link_to 'Cashflow', cashflows_path , class: "nav-link"  %>
+    <% if user_signed_in? %>
+      <%= button_to "Add Cashflow", new_cashflow_path, method: :get, class: "nav-link" %>
 
+    <% end %>
 
   <% if user_signed_in? %>
-    <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
+    <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "nav-link"  %>
   <% else %>
-    <%= link_to "Sign in", new_user_session_path %> |
-    <%= link_to "Sign up", new_user_registration_path %>
+    <%= link_to "Sign in", new_user_session_path , class: "nav-link" %>
+    <%= link_to "Sign up", new_user_registration_path, class: "nav-link"  %>
   <% end %>
+  </nav>
 
     <%= yield %>
+</header>
   </div>
+
   </body>
 </html>
