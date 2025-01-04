@@ -7,6 +7,13 @@ class Cashflow < ApplicationRecord
   scope :active, -> { where(deleted_at: nil) }
   scope :deleted, -> { where.not(deleted_at: nil) }
 
+  before_save :set_credit_debit
+
+  private
+
+  def set_credit_debit
+    self.credit_debit = amount.negative? ? "credit" : "debit"
+  end
   # Mark as deleted
   def soft_delete
     update(deleted_at: Time.current)

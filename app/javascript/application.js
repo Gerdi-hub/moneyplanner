@@ -5,5 +5,6 @@ import "@hotwired/turbo-rails"
 import "controllers"
 import "bootstrap"
 import { start } from "@rails/ujs"
+import "./cashflow_form";
 
 start()

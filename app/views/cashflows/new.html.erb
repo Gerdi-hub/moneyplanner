@@ -14,13 +14,19 @@
 
   <div class="field">
     <%= form.label :amount %>
-    <%= form.number_field :amount, step: 0.01 %>
+    <%= form.number_field :amount, id: "amount-field", step: 0.01 %>
   </div>
 
+  <%= form.hidden_field :credit_debit, id: "credit-debit-field" %>
 
   <div class="field">
     <%= form.label :description %>
     <%= form.text_area :description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :credit_debit %>
+    <%= form.text_area :credit_debit, id: "credit-debit-field"%>
   </div>
 
   <div class="field">

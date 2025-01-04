@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_03_132134) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_04_115520) do
   create_table "cashflows", force: :cascade do |t|
     t.decimal "amount"
     t.string "description"
@@ -19,6 +19,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_03_132134) do
     t.datetime "updated_at", null: false
     t.date "date"
     t.datetime "deleted_at"
+    t.string "credit_debit"
     t.index ["user_id"], name: "index_cashflows_on_user_id"
   end
 
@@ -45,6 +46,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_03_132134) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "cashflows", "users"
+  add_foreign_key "cashflows", "users", primary_key: "id"
   add_foreign_key "expenses", "users"
 end
