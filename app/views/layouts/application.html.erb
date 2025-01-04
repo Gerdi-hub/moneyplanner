@@ -21,10 +21,13 @@
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
   <body>
+  <div class="container-fluid">
+
+
   <% if user_signed_in? %>
     <%= button_to "Sign out", destroy_user_session_path, method: :delete %>
   <% else %>
@@ -33,5 +36,6 @@
   <% end %>
 
     <%= yield %>
+  </div>
   </body>
 </html>

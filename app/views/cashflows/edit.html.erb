@@ -1,9 +1,9 @@
-<h1>Edit Income</h1>
+<h1>Edit Cashflow</h1>
 
 <%= form_with model: @cashflow, local: true do |form| %>
   <% if @cashflow.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@cashflow.errors.count, "error") %> prohibited this income from being saved:</h2>
+      <h2><%= pluralize(@cashflow.errors.count, "error") %> prohibited this cashflow from being saved:</h2>
       <ul>
         <% @cashflow.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -32,4 +32,4 @@
   </div>
 <% end %>
 
-<%= link_to 'Back to Incomes', incomes_path %>
+<%= link_to 'Back to Cashflows', cashflows_path %>

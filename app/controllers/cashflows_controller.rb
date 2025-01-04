@@ -10,7 +10,7 @@ class CashflowsController < ApplicationController
   end
 
   def create
-    @cashflow = current_user.cashflows.build(income_params)
+    @cashflow = current_user.cashflows.build(cashflow_params)
 
     if @cashflow.save
       redirect_to cashflows_path, notice: "Cashflow added successfully!"
@@ -26,7 +26,7 @@ class CashflowsController < ApplicationController
   def update
     @cashflow = current_user.cashflows.find(params[:id])
 
-    if @cashflow.update(income_params)
+    if @cashflow.update(cashflow_params)
       redirect_to cashflows_path, notice: "Cashflow updated successfully!"
     else
       render :edit
@@ -34,14 +34,14 @@ class CashflowsController < ApplicationController
   end
 
   def destroy
-    @cashflow = current_user.cashflows.find(params[:id])
+    @cashflow = current_user.cashflows.find(params[:id]) # Corrected to `cashflows`
     @cashflow.soft_delete
     redirect_to cashflows_path, notice: "Cashflow marked as deleted!"
   end
 
   private
 
-  def income_params
-    params.require(:cashflow).permit(:amount, :description, :date)
+  def cashflow_params
+    params.require(:cashflow).permit(:amount, :description, :date) # Updated method name
   end
 end

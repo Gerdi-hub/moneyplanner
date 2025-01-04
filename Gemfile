@@ -62,22 +62,22 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem 'devise'
+gem "devise"
 
 # Bootstrap for styling
-gem 'bootstrap', '~> 5.3.0'
+gem "bootstrap", "~> 5.3.0"
 
 # RSpec for testing
-gem 'rspec-rails', '~> 6.0', group: [:development, :test]
+gem "rspec-rails", "~> 6.0", group: [:development, :test]
 
 # FactoryBot for test factories
-gem 'factory_bot_rails', '~> 6.2', group: [:development, :test]
+gem "factory_bot_rails", "~> 6.2", group: [:development, :test]
 
 # Money-Rails for handling money
-gem 'money-rails', '~> 1.15'
+gem "money-rails", "~> 1.15"
 
 # Chartkick for charts and graphs
-gem 'chartkick', '~> 5.0'
-gem 'groupdate', '~> 6.1' # Recommended for advanced grouping in Chartkick
+gem "chartkick", "~> 5.0"
+gem "groupdate", "~> 6.1" # Recommended for advanced grouping in Chartkick
 
-gem 'sassc-rails'
+gem "sassc-rails"
