@@ -42,6 +42,6 @@ class CashflowsController < ApplicationController
   private
 
   def cashflow_params
-    params.require(:cashflow).permit(:amount, :description, :date) # Updated method name
+    params.require(:cashflow).permit(:amount, :description, :date, :type_name) # Updated method name
   end
 end
