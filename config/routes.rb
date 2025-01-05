@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   }
   resources :keywords
 
+  post 'import_records', to: 'cashflows#import'
 
 
 end
