@@ -81,7 +81,7 @@ class CashflowsController < ApplicationController
           next
         end
         date = Date.strptime(row["Kuupäev"], "%d.%m.%Y") rescue nil
-        description = row["Selgitus"]
+        description = [row['Saaja/maksja nimi'], row['Selgitus']].compact.join(' ')
         amount = row["Summa"].gsub(",", ".").to_f
         debit_credit = row["Deebet/Kreedit (D/C)"]
         amount *= -1 if debit_credit == "D"
