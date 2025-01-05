@@ -4,7 +4,5 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import "bootstrap"
-import { start } from "@rails/ujs"
-
-
-start()
+import Rails from "@rails/ujs";
+Rails.start();
