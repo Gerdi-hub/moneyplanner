@@ -1,5 +1,5 @@
 class CashflowsController < ApplicationController
-  require 'csv' # Ensure the CSV library is loaded
+  require 'csv'
   before_action :authenticate_user!
 
   def index

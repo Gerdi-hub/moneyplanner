@@ -1,4 +1,24 @@
-<h1>Moneyplanner</h1>
+<h2>Monthly Cashflow Summary</h2>
 
-
-
+<table border="1">
+  <thead>
+  <tr>
+    <th>Type</th>
+    <% @monthly_data.keys.each do |month| %>
+      <th><%= month %></th>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @row_labels.each do |label| %>
+    <tr>
+      <td><%= label.presence || "Unspecified" %></td>
+      <% @monthly_data.each do |month, types| %>
+        <td>
+          <%= number_to_currency(types[label] || 0) %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
