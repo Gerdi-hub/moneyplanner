@@ -16,8 +16,8 @@
       <td><%= keyword.name %></td>
       <td><%= keyword.type_name %></td>
       <td>
-        <%= link_to "Edit", edit_keyword_path(keyword) %>
-        <%= link_to "Delete", keyword_path(keyword), method: :delete, data: { confirm: "Are you sure?" } %>
+        <%= link_to "Edit", edit_keyword_path(keyword), class: "btn btn-outline-secondary btn-sm me-2" %>
+        <%= link_to "Delete", keyword_path(keyword), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-secondary btn-sm me-2" %>
       </td>
     </tr>
   <% end %>
