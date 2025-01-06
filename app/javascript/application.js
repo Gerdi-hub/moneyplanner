@@ -2,6 +2,7 @@
 //= require bootstrap
 
 import "jquery"
+
 import "@hotwired/turbo-rails"
 import "controllers"
 import "select2"
