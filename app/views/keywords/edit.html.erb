@@ -1,4 +1,4 @@
-<h1><%= @keyword.new_record? ? "Add New Keyword" : "Edit Keyword" %></h1>
+<h1 ><%= @keyword.new_record? ? "Add New Keyword" : "Edit Keyword" %></h1>
 
 <%= form_with model: @keyword, local: true do |form| %>
   <% if @keyword.errors.any? %>

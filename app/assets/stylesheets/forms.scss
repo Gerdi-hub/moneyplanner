@@ -1,0 +1,86 @@
+
+/*.custom-form {
+  margin: 1rem auto;
+  max-width: 600px;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}*/
+
+/* Headings inside forms */
+form h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Labels */
+form label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* Input fields */
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form textarea,
+.custom-form select {
+  width: 100%;
+  padding: 0.8rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Add focus styles */
+form input:focus,
+form textarea:focus,
+form select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
+}
+
+/* Error messages */
+#error_explanation {
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c6cb;
+  border-radius: 4px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+#error_explanation h2 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+#error_explanation ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+}
+
+/* Submit button */
+form input[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  font-size: 1rem;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+  background-color: #0056b3;
+}
