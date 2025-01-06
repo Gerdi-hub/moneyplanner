@@ -1,5 +1,6 @@
 <h2>Monthly Cashflow Summary</h2>
 
+
 <table border="1">
   <thead>
   <tr>
@@ -15,10 +16,15 @@
       <td><%= label.presence || "Unspecified" %></td>
       <% @monthly_data.each do |month, types| %>
         <td>
-          <%= number_to_currency(types[label] || 0) %>
+          <% if types[label] %>
+            <%= Money.new(types[label] * 100, "EUR").format %>
+          <% else %>
+            0.00€
+          <% end %>
         </td>
       <% end %>
     </tr>
   <% end %>
   </tbody>
 </table>
+

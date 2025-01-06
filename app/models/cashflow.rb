@@ -5,6 +5,7 @@ class Cashflow < ApplicationRecord
 
   scope :active, -> { where(deleted_at: nil) }
   scope :deleted, -> { where.not(deleted_at: nil) }
+  monetize :amount, as: :money_amount, numericality: true
 
   def soft_delete
     update(deleted_at: Time.current)

@@ -112,4 +112,16 @@ MoneyRails.configure do |config|
   #
   # Example:
   # config.raise_error_on_money_parsing = false
-end
+
+  config.default_currency = :eur # Set default currency to EUR'
+  config.default_currency = :eur
+  config.add_rate("EUR", "USD", 1.1) # Optional, if currency conversions are needed.
+
+  # Default format for all Money objects
+  config.default_format = {
+    symbol: "€",
+    symbol_position: :after, # Places the symbol after the number
+    no_cents_if_whole: false, # Keeps decimals even for whole numbers
+    sign_before_symbol: false # Ensures negative signs are correctly placed
+  }
+  end
