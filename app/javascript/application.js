@@ -5,7 +5,6 @@ import "jquery"
 import "@hotwired/turbo-rails"
 import "controllers"
 import "select2"
-import "select2-css"
 import "./select2"
 import "bootstrap"
 import Rails from "@rails/ujs";

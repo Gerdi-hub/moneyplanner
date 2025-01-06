@@ -1,6 +1,5 @@
 import "jquery"
 import "select2"
-import "select2.css"
 
 
 document.addEventListener("DOMContentLoaded", function() {
