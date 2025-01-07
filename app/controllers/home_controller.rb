@@ -1,15 +1,16 @@
 class HomeController < ApplicationController
   def index
+    @user_cashflows = current_user.cashflows.active
     # Get all available years from cashflow records
-    @available_years = Cashflow.distinct.pluck(Arel.sql("strftime('%Y', date)")).sort.reverse
+    @available_years = @user_cashflows.distinct.pluck(Arel.sql("strftime('%Y', date)")).sort.reverse
 
     # If years are selected, filter the data
     if params[:years].present?
       @selected_years = params[:years]
-      @cashflows = Cashflow.where(Arel.sql("strftime('%Y', date) IN (?)"), @selected_years)
+      @cashflows = @user_cashflows.where(Arel.sql("strftime('%Y', date) IN (?)"), @selected_years)
     else
       @selected_years = []
-      @cashflows = Cashflow.all
+      @cashflows = @user_cashflows.all
     end
 
     # Group the cashflows by month
@@ -37,4 +38,4 @@ class HomeController < ApplicationController
     # Collect labels for rows (only include those with actual data)
     @row_labels = @monthly_data.values.flat_map(&:keys).uniq
   end
-  end
+end
