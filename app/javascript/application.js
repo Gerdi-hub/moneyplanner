@@ -8,6 +8,9 @@ import "controllers"
 import "select2"
 import "./select2"
 import "bootstrap"
+import "chartkick"
+import "Chart.bundle"
+
 import Rails from "@rails/ujs";
 
 Rails.start();

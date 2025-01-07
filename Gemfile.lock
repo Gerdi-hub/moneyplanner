@@ -448,7 +448,7 @@ DEPENDENCIES
   bootstrap (~> 5.3.0)
   brakeman
   capybara
-  chartkick (~> 5.0)
+  chartkick
   debug
   devise
   factory_bot_rails (~> 6.2)

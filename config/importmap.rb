@@ -16,3 +16,5 @@ pin "jquery", to: "https://code.jquery.com/jquery-3.6.0.min.js"
 
 pin "select2", to: "https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"
 
+pin "chartkick", to: "chartkick.js"
+pin "Chart.bundle", to: "Chart.bundle.js"

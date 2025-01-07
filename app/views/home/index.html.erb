@@ -7,7 +7,7 @@
   <%= form.submit 'Filter', class: 'btn btn-primary' %>
 <% end %>
 
-<table border="1" class="table">
+<table class="table">
   <thead>
   <tr>
     <th>Type</th>
@@ -32,5 +32,5 @@
   </tbody>
 </table>
 
-
+<%= line_chart Cashflow.group_by_day(:created_at).sum(:amount) %>
 
