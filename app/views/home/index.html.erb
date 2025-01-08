@@ -34,4 +34,10 @@
 
   <%= line_chart @cashflows.group(:type_name).group_by_month(:date).sum(:amount) %>
 
+
+
+
+
+<% else %>
+<p>You need to <%= link_to 'sign in', new_user_session_path %> or <%= link_to 'sign up', new_user_registration_path %> before continuing.</p>
 <% end %>

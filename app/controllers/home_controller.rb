@@ -40,5 +40,6 @@ class HomeController < ApplicationController
       # Collect labels for rows (only include those with actual data)
       @row_labels = @monthly_data.values.flat_map(&:keys).uniq
     end
+
   end
 end
