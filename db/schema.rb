@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_04_145102) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_05_105605) do
   create_table "cashflows", force: :cascade do |t|
     t.decimal "amount"
     t.string "description"
@@ -20,7 +20,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_04_145102) do
     t.date "date"
     t.datetime "deleted_at"
     t.string "credit_debit"
-    t.string "type"
+    t.string "type_name"
+    t.integer "column_name"
     t.index ["user_id"], name: "index_cashflows_on_user_id"
   end
 
@@ -36,6 +37,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_04_145102) do
   create_table "keywords", force: :cascade do |t|
     t.string "name"
     t.string "type_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "records", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
