@@ -16,7 +16,9 @@ class CashflowsController < ApplicationController
     if @cashflow.save
       redirect_to cashflows_path, notice: "Cashflow added successfully!"
     else
-      render :new
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity }
+      end
     end
   end
 

@@ -1,9 +1,13 @@
 <h1>Add New cashflow</h1>
 
+<% if alert %>
+  <p class="alert alert-danger"><%= flash[:alert]  %></p>
+<% end %>
+
 <%= form_with model: @cashflow, local: true do |form| %>
   <% if @cashflow.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@cashflow.errors.count, "error") %> prohibited this cashflow from being saved:</h2>
+      <h2><%= pluralize(@cashflow.errors.count, "error") %> prohibited this keyword from being saved:</h2>
       <ul>
         <% @cashflow.errors.full_messages.each do |message| %>
           <li><%= message %></li>

@@ -15,7 +15,7 @@
   <%= form.submit "Upload", class: "btn btn-outline-secondary btn-sm me-2" %>
 <% end %>
 
-<div class="table-responsive text-truncate small">
+<div class="table-responsive ">
 <table class="table">
   <thead>
   <tr>
@@ -31,7 +31,7 @@
   <% @cashflows.each do |cashflow| %>
     <tr>
       <td><%= cashflow.amount %></td>
-      <td class="table-responsive text-truncate small" style="max-width: 150px;" ><%= cashflow.description %></td>
+      <td class="table-responsive text-truncate" style="max-width: 200px;" ><%= cashflow.description %></td>
       <td ><%= cashflow.date %></td>
       <td><%= cashflow.credit_debit %></td>
       <td><%= cashflow.type_name %></td>
@@ -46,5 +46,6 @@
   </tbody>
 </table>
 </div>
+
 
 

@@ -15,7 +15,9 @@ class KeywordsController < ApplicationController
     if @keyword.save
       redirect_to keywords_path, notice: "Keyword added successfully!"
     else
-      render :new
+      respond_to do |format|
+        format.html { render :new, status: :unprocessable_entity }
+        end
     end
   end
 
