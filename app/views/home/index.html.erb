@@ -1,5 +1,5 @@
 <h2>Monthly Cashflow Summary</h2>
-
+<div class="table-responsive text-truncate small">
 <% if @current_user %>
   <form action="/" method="get">
     <label>Select years</label>
@@ -52,3 +52,4 @@
 <% else %>
 <p>You need to <%= link_to 'sign in', new_user_session_path %> or <%= link_to 'sign up', new_user_registration_path %> before continuing.</p>
 <% end %>
+</div>

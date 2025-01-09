@@ -30,39 +30,52 @@
 
 
   <body>
-  <div class="container-fluid">
+  <div class="container-lg">
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid d-flex justify-content-between">
-      <!-- Left Section -->
-      <div class="d-flex">
-        <%= link_to 'Home', root_path, class: "navbar-brand me-3" %>
-        <ul class="navbar-nav d-flex flex-row">
+    <div class="container-fluid">
+      <!-- Brand -->
+      <%= link_to 'Home', root_path, class: "navbar-brand" %>
+
+      <!-- Toggle Button -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Collapsible Content -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <%= link_to 'Cashflow', cashflows_path, class: "nav-link me-3" %>
+            <%= link_to 'Cashflow', cashflows_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Keywords', keywords_path, class: "nav-link me-3" %>
+            <%= link_to 'Keywords', keywords_path, class: "nav-link" %>
           </li>
           <% if user_signed_in? %>
             <li class="nav-item">
-              <%= button_to "Add Cashflow", new_cashflow_path, method: :get, class: "btn btn-outline-primary nav-link me-3" %>
+              <%= button_to "Add Cashflow", new_cashflow_path, method: :get, class: "btn btn-outline-primary nav-link" %>
+            </li>
+          <% end %>
+        </ul>
+        <ul class="navbar-nav ms-auto">
+          <% if user_signed_in? %>
+            <li class="nav-item">
+              <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-primary me-2" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Sign up", new_user_registration_path, class: "btn btn-outline-success" %>
             </li>
           <% end %>
         </ul>
       </div>
-
-      <!-- Right Section -->
-      <div class="d-flex">
-        <% if user_signed_in? %>
-          <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger me-2" %>
-        <% else %>
-          <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-primary me-2" %>
-          <%= link_to "Sign up", new_user_registration_path, class: "btn btn-outline-success" %>
-        <% end %>
-      </div>
     </div>
   </nav>
+
+
 
 
   <%= yield %>
