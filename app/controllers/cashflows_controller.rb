@@ -49,21 +49,9 @@ class CashflowsController < ApplicationController
       Rails.logger.debug "File present: #{params[:file].inspect}"
     end
 
-    bank = params[:bank]
+
     file = params[:file]
-
-    Rails.logger.debug "Bank selected: #{bank}"
-    if bank == "seb"
-      Rails.logger.debug "Processing SEB CSV file"
-      process_seb_csv(file)
-    elsif bank == "swedbank"
-        Rails.logger.debug "Processing SWEDBANK CSV file"
-        process_swedbank_csv(file)
-
-    else
-      Rails.logger.debug "Unsupported bank format: #{bank}"
-      redirect_to root_path, alert: "Unsupported bank format"
-    end
+    process_csv(file)
   end
 
   private
@@ -72,67 +60,60 @@ class CashflowsController < ApplicationController
     params.require(:cashflow).permit(:amount, :description, :date, :type_name) # Updated method name
   end
 
-  def process_seb_csv(file)
-    Rails.logger.debug "Started processing SEB CSV file"
-    Rails.logger.debug "File path: #{file.path}"
-    Rails.logger.debug "File content preview: #{File.read(file.path).lines.first(5).join}"
+  def process_csv(file)
+    Rails.logger.debug "Started processing CSV file"
+
     begin
       csv_options = { col_sep: ";", headers: true, encoding: "r:bom|utf-8" }
-      CSV.foreach(file.path, "r", **csv_options) do |row|
-        next if row.any?(&:nil?) # Skip rows with nil values
-        Rails.logger.debug "Processing row: #{row.inspect}"
-        if row.empty?
-          Rails.logger.debug "Empty row detected, skipping"
-          next
-        end
+      first_row = CSV.open(file.path, "r", **csv_options).first
+      headers = first_row&.headers
+
+      raise "Could not determine bank format from CSV headers" if headers.nil?
+
+      if headers.include?("Deebet/Kreedit (D/C)") # SEB format
+        process_csv_rows(file, csv_options, bank: :seb)
+      elsif headers.include?("Tehingu tüüp") # Swedbank format
+        process_csv_rows(file, csv_options, bank: :swedbank)
+      else
+        raise "Unsupported CSV format"
+      end
+
+      redirect_to cashflows_path, notice: "CSV imported successfully"
+    rescue => e
+      redirect_to root_path, alert: "Error importing CSV: #{e.message}"
+    end
+  end
+
+  private
+
+  def process_csv_rows(file, csv_options, bank:)
+    CSV.foreach(file.path, "r", **csv_options) do |row|
+      next if row.any?(&:nil?) # Skip rows with nil values
+      Rails.logger.debug "Processing row: #{row.inspect}"
+      next if row.empty?
+
+      if bank == :seb
         date = Date.strptime(row["Kuupäev"], "%d.%m.%Y") rescue nil
         description = [row['Saaja/maksja nimi'], row['Selgitus']].compact.join(' ')
         amount = row["Summa"].gsub(",", ".").to_f
         debit_credit = row["Deebet/Kreedit (D/C)"]
-        amount *= -1 if debit_credit == "D"
-
-        # Save the data to the Cashflow table
-        Cashflow.create!(
-          user: current_user,
-          date: date,
-          description: description,
-          amount: amount
-        )
-      end
-
-      redirect_to root_path, notice: "CSV imported successfully"
-    rescue => e
-      redirect_to root_path, alert: "Error importing CSV: #{e.message}"
-    end
-  end
-
-  def process_swedbank_csv(file)
-    begin
-      csv_options = { col_sep: ";", headers: true, encoding: "r:bom|utf-8" }
-      CSV.foreach(file.path, "r", **csv_options) do |row|
-        next if row.any?(&:nil?) || ["K2", "LS", "AS"].include?(row["Tehingu tüüp"])# Skip rows with nil values
-        Rails.logger.debug "Processing row: #{row.inspect}"
-        if row.empty?
-          Rails.logger.debug "Empty row detected, skipping"
-          next
-        end
+      elsif bank == :swedbank
+        next if ["K2", "LS", "AS"].include?(row["Tehingu tüüp"])
         date = Date.strptime(row["Kuupäev"], "%d.%m.%Y") rescue nil
         description = [row['Saaja/Maksja'], row['Selgitus']].compact.join(' ')
         amount = row["Summa"].gsub(",", ".").to_f
         debit_credit = row["Deebet/Kreedit"]
-        amount *= -1 if debit_credit == "D"
-
-        Cashflow.create!(
-          user: current_user,
-          date: date,
-          description: description,
-          amount: amount
-        )
       end
 
-      redirect_to root_path, notice: "CSV imported successfully"
-    rescue => e
-      redirect_to root_path, alert: "Error importing CSV: #{e.message}"
+      amount *= -1 if debit_credit == "D"
+
+      Cashflow.create!(
+        user: current_user,
+        date: date,
+        description: description,
+        amount: amount
+      )
     end
   end
+
 end

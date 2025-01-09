@@ -4,10 +4,10 @@
 
 
 <%= form_with url: import_records_path, local: true, method: :post, multipart: true do |form| %>
-  <div>
-    <%= form.label :bank, "Select Bank" %><br>
-    <%= form.select :bank, [['SEB', 'seb'], ['Swedbank', 'swedbank']], prompt: 'Choose a bank', required: true %>
-  </div>
+<!--  <div>
+    <%#= form.label :bank, "Select Bank" %><br>
+    <%#= form.select :bank, [['SEB', 'seb'], ['Swedbank', 'swedbank']], prompt: 'Choose a bank', required: true %>
+  </div>-->
   <div>
     <%= form.label :file, "Upload CSV File" %><br>
     <%= form.file_field :file, required: true %>

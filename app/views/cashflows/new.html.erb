@@ -1,8 +1,5 @@
 <h1>Add New cashflow</h1>
 
-<% if alert %>
-  <p class="alert alert-danger"><%= flash[:alert]  %></p>
-<% end %>
 
 <%= form_with model: @cashflow, local: true do |form| %>
   <% if @cashflow.errors.any? %>
