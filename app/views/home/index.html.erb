@@ -1,11 +1,22 @@
 <h2>Monthly Cashflow Summary</h2>
 
 <% if @current_user %>
-  <%= form_with url: root_path, method: :get, local: true do |form| %>
-    <%= form.label :years, "Select years" %>
-    <%= form.select :years, options_for_select(@available_years.map { |year| [year, year] }, selected: @selected_years), prompt: 'Select years', multiple: true, class: 'form-select' %>
-    <%= form.submit 'Filter', class: 'btn btn-primary' %>
-  <% end %>
+  <form action="/" method="get">
+    <label>Select years</label>
+    <div>
+      <% @available_years.each do |year| %>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" name="years[]" id="year_<%= year %>" value="<%= year %>"<%= 'checked' if @selected_years.include?(year) %>>
+          <label class="form-check-label" for="year_<%= year %>">
+            <%= year %>
+          </label>
+        </div>
+      <% end %>
+    </div>
+    <button type="submit" class="btn btn-outline-secondary btn-sm me-2">Filter</button>
+  </form>
+
+
 
   <table class="table">
     <thead>
