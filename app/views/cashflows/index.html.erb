@@ -2,6 +2,20 @@
 
 <%= link_to 'Add Cashflow', new_cashflow_path, class: "btn btn-outline-secondary btn-sm me-2"  %>
 
+
+<%= form_with url: import_records_path, local: true, method: :post, multipart: true do |form| %>
+  <div>
+    <%= form.label :bank, "Select Bank" %><br>
+    <%= form.select :bank, [['SEB', 'seb'], ['Swedbank', 'swedbank']], prompt: 'Choose a bank', required: true %>
+  </div>
+  <div>
+    <%= form.label :file, "Upload CSV File" %><br>
+    <%= form.file_field :file, required: true %>
+  </div>
+  <%= form.submit "Upload", class: "btn btn-outline-secondary btn-sm me-2" %>
+<% end %>
+
+
 <table class="table">
   <thead>
   <tr>
@@ -33,14 +47,3 @@
 </table>
 
 
-<%= form_with url: import_records_path, local: true, method: :post, multipart: true do |form| %>
-  <div>
-    <%= form.label :bank, "Select Bank" %><br>
-    <%= form.select :bank, [['SEB', 'seb'], ['Swedbank', 'swedbank']], prompt: 'Choose a bank' %>
-  </div>
-  <div>
-    <%= form.label :file, "Upload CSV File" %><br>
-    <%= form.file_field :file %>
-  </div>
-  <%= form.submit "Upload", class: "btn btn-outline-secondary btn-sm me-2" %>
-<% end %>
