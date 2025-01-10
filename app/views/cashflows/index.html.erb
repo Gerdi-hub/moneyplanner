@@ -16,6 +16,26 @@
 <% end %>
 
 <div class="table-responsive ">
+  <form action="#" method="get">
+  <div>
+    <% @available_months.group_by(&:year).each do |year, months| %>
+      <div class="form-group">
+        <h5><%= year %></h5>
+        <% months.each do |month| %>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="months[]" id="month_<%= month %>" value="<%= month.strftime("%m-%Y") %>"<%= 'checked' if @selected_months.include?(month.strftime("%m-%Y")) %>>
+            <label class="form-check-label" for="month_<%= month %>">
+              <%= month.strftime("%B") %>
+            </label>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <button type="submit" class="btn btn-outline-secondary btn-sm me-2">Filter</button>
+  </form>
+
+
 <table class="table">
   <thead>
   <tr>
