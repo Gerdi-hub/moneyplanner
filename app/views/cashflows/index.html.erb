@@ -1,70 +1,76 @@
 <h1>Your Cashflow</h1>
 
-<%= link_to 'Add Cashflow', new_cashflow_path, class: "btn btn-outline-secondary btn-sm me-2"  %>
 
+<div class="container">
+  <div class="row">
 
-<%= form_with url: import_records_path, local: true, method: :post, multipart: true do |form| %>
-<!--  <div>
-    <%#= form.label :bank, "Select Bank" %><br>
-    <%#= form.select :bank, [['SEB', 'seb'], ['Swedbank', 'swedbank']], prompt: 'Choose a bank', required: true %>
-  </div>-->
-  <div>
-    <%= form.label :file, "Upload CSV File" %><br>
-    <%= form.file_field :file, required: true %>
-  </div>
-  <%= form.submit "Upload", class: "btn btn-outline-secondary btn-sm me-2" %>
-<% end %>
-
-<div class="table-responsive ">
-  <form action="#" method="get">
-  <div>
-    <% @available_months.group_by(&:year).each do |year, months| %>
-      <div class="form-group">
-        <h5><%= year %></h5>
-        <% months.each do |month| %>
-          <div class="form-check">
-            <input class="form-check-input" type="checkbox" name="months[]" id="month_<%= month %>" value="<%= month.strftime("%m-%Y") %>"<%= 'checked' if @selected_months.include?(month.strftime("%m-%Y")) %>>
-            <label class="form-check-label" for="month_<%= month %>">
-              <%= month.strftime("%B") %>
-            </label>
+    <div class="col">
+      <div class="table-responsive ">
+        <form action="#" method="get">
+          <div>
+            <% @available_months.group_by(&:year).each do |year, months| %>
+              <div class="form-group">
+                <h5><%= year %></h5>
+                <% months.each do |month| %>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="months[]" id="month_<%= month %>" value="<%= month.strftime("%m-%Y") %>"<%= 'checked' if @selected_months.include?(month.strftime("%m-%Y")) %>>
+                    <label class="form-check-label" for="month_<%= month %>">
+                      <%= month.strftime("%B") %>
+                    </label>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
           </div>
-        <% end %>
+          <button type="submit" class="btn btn-outline-secondary btn-sm me-2">Filter</button>
+        </form>
       </div>
-    <% end %>
-  </div>
-  <button type="submit" class="btn btn-outline-secondary btn-sm me-2">Filter</button>
-  </form>
+    </div>
+    <div class="col">
+      <%= link_to 'Add Cashflow', new_cashflow_path, class: "btn btn-outline-secondary btn-sm me-2" %>
+      <br>
+      <br>
 
+      <%= form_with url: import_records_path, local: true, method: :post, multipart: true do |form| %>
 
-<table class="table">
-  <thead>
-  <tr>
-    <th>Amount</th>
-    <th>Description</th>
-    <th>Date</th>
-    <th>Credit/Debit</th>
-    <th>Type</th>
-    <th>Actions</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @cashflows.each do |cashflow| %>
-    <tr>
-      <td><%= cashflow.amount %></td>
-      <td class="table-responsive text-truncate" style="max-width: 200px;" ><%= cashflow.description %></td>
-      <td ><%= cashflow.date %></td>
-      <td><%= cashflow.credit_debit %></td>
-      <td><%= cashflow.type_name %></td>
-      <td>
-        <div class="d-flex">
-        <%= link_to "Edit", edit_cashflow_path(cashflow), class: "btn btn-outline-secondary btn-sm me-2" %>
-        <%= button_to 'Delete', cashflow_path(cashflow), class: "btn btn-outline-secondary btn-sm me-2", method: :delete, data: { confirm: 'Are you sure you want to delete this cashflow?' } %>
+        <div>
+          <%= form.label :file, "Upload CSV File" %>
+          <%= form.file_field :file, required: true %>
         </div>
-      </td>
+        <%= form.submit "Upload", class: "btn btn-outline-secondary btn-sm me-2" %>
+      <% end %>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th>Amount</th>
+      <th>Description</th>
+      <th>Date</th>
+      <th>Credit/Debit</th>
+      <th>Type</th>
+      <th>Actions</th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <% @cashflows.each do |cashflow| %>
+      <tr>
+        <td><%= cashflow.amount %></td>
+        <td class="table-responsive text-truncate" style="max-width: 200px;"><%= cashflow.description %></td>
+        <td><%= cashflow.date %></td>
+        <td><%= cashflow.credit_debit %></td>
+        <td><%= cashflow.type_name %></td>
+        <td>
+          <div class="d-flex">
+            <%= link_to "Edit", edit_cashflow_path(cashflow), class: "btn btn-outline-secondary btn-sm me-2" %>
+            <%= button_to 'Delete', cashflow_path(cashflow), class: "btn btn-outline-secondary btn-sm me-2", method: :delete, data: { confirm: 'Are you sure you want to delete this cashflow?' } %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 </div>
 
 
