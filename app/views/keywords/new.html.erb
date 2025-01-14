@@ -1,3 +1,4 @@
+<div class="container">
 <h1><%= @keyword.new_record? ? "Add New Keyword" : "Edit Keyword" %></h1>
 
 <%= form_with model: @keyword, local: true do |form| %>
@@ -28,3 +29,4 @@
 <% end %>
 
 <%= link_to "Back to Keywords", keywords_path, class: "btn btn-outline-secondary btn-sm me-2"  %>
+</div>
