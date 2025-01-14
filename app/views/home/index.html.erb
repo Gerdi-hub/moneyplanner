@@ -62,7 +62,8 @@
     </table>
 
 
-    <%= line_chart @cashflows.group(:type_name).group_by_month(:date).sum(:amount) %>
+    <%= line_chart @cashflows.group(:type_name).group_by_month(:date).sum(:amount).transform_keys { |(type_name, date)| [type_name || "Unspecified", date] } %>
+
 
 
   <% else %>
