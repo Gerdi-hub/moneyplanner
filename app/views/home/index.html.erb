@@ -36,7 +36,6 @@
       </thead>
       <tbody>
       <% @row_labels.each do |label| %>
-        <% # Skip labels where all monthly values are zero or nil %>
         <% next if @monthly_data.all? { |_, types| (types[label] || 0).zero? } %>
         <tr>
           <td><%= label.presence || "Unspecified" %></td>
@@ -48,7 +47,20 @@
         </tr>
       <% end %>
       </tbody>
+      <tfoot>
+      <% ["Debit Total", "Credit Total", "Difference"].each do |label| %>
+        <tr class="table-secondary">
+          <td><%= label %></td>
+          <% @monthly_data.each do |_, types| %>
+            <td>
+              <%= Money.new((types[label] || 0) * 100, "EUR").format %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+      </tfoot>
     </table>
+
 
     <%= line_chart @cashflows.group(:type_name).group_by_month(:date).sum(:amount) %>
 

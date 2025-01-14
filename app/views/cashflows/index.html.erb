@@ -8,7 +8,7 @@
             <% @available_months.group_by(&:year).each do |year, months| %>
               <div class="form-group mb-3">
                 <div class="d-flex align-items-center">
-                  <button class="btn btn-link p-0 text-decoration-none" type="button"
+                  <button class="btn btn-link p-0 text-decoration-none d-flex align-items-center" type="button"
                           data-bs-toggle="collapse"
                           data-bs-target="#year<%= year %>"
                           aria-expanded="false"

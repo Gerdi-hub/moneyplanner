@@ -16,3 +16,12 @@ import Rails from "@rails/ujs";
 
 Rails.start();
 
+document.addEventListener('turbo:load', function() {
+    // Initialize all collapsible elements
+    var collapsibles = document.querySelectorAll('[data-bs-toggle="collapse"]');
+    collapsibles.forEach(function(element) {
+        new bootstrap.Collapse(element.dataset.bsTarget, {
+            toggle: false
+        });
+    });
+});

@@ -1,5 +1,5 @@
 class CashflowsController < ApplicationController
-  require 'csv'
+  require "csv"
   before_action :authenticate_user!
 
   def index
@@ -9,8 +9,6 @@ class CashflowsController < ApplicationController
     @available_years = @user_cashflows.distinct.pluck(Arel.sql("strftime('%Y', date)")).sort.reverse
     @available_months = @user_cashflows.distinct.pluck(Arel.sql("strftime('%m-%Y', date)")).sort.reverse.map { |month| Date.strptime(month, "%m-%Y") }
 
-
-    # If years are selected, filter the data
     if params[:years].present?
       @selected_years = params[:years]
       @cashflows = @user_cashflows.where(Arel.sql("strftime('%Y', date) IN (?)"), @selected_years)
@@ -21,22 +19,21 @@ class CashflowsController < ApplicationController
 
     if params[:months].present?
       @selected_months = params[:months]
-      @cashflows = @user_cashflows.where(Arel.sql("strftime('%m-%Y', date) IN (?)"),  @selected_months)
+      @cashflows = @user_cashflows.where(Arel.sql("strftime('%m-%Y', date) IN (?)"), @selected_months)
     else
       @selected_months = []
       @cashflows = @user_cashflows.all
     end
 
-    # Group the cashflows by month
     @monthly_data = @cashflows.group_by do |cashflow|
       cashflow.date.strftime("%m-%Y")
     end.transform_values do |cashflows|
-      # Group by type and calculate sums
+
       types_data = cashflows.group_by(&:type_name).transform_values do |grouped_cashflows|
         grouped_cashflows.sum(&:amount)
       end
     end
-    end
+  end
 
   def new
     @cashflow = Cashflow.new
@@ -81,7 +78,6 @@ class CashflowsController < ApplicationController
       Rails.logger.debug "File present: #{params[:file].inspect}"
     end
 
-
     file = params[:file]
     process_csv(file)
   end
@@ -89,7 +85,7 @@ class CashflowsController < ApplicationController
   private
 
   def cashflow_params
-    params.require(:cashflow).permit(:amount, :description, :date, :type_name) # Updated method name
+    params.require(:cashflow).permit(:amount, :description, :date, :type_name)
   end
 
   def process_csv(file)
@@ -120,19 +116,19 @@ class CashflowsController < ApplicationController
 
   def process_csv_rows(file, csv_options, bank:)
     CSV.foreach(file.path, "r", **csv_options) do |row|
-      next if row.any?(&:nil?) # Skip rows with nil values
+      next if row.any?(&:nil?)
       Rails.logger.debug "Processing row: #{row.inspect}"
       next if row.empty?
 
       if bank == :seb
         date = Date.strptime(row["Kuupäev"], "%d.%m.%Y") rescue nil
-        description = [row['Saaja/maksja nimi'], row['Selgitus']].compact.join(' ')
+        description = [row["Saaja/maksja nimi"], row["Selgitus"]].compact.join(" ")
         amount = row["Summa"].gsub(",", ".").to_f
         debit_credit = row["Deebet/Kreedit (D/C)"]
       elsif bank == :swedbank
         next if ["K2", "LS", "AS"].include?(row["Tehingu tüüp"])
         date = Date.strptime(row["Kuupäev"], "%d.%m.%Y") rescue nil
-        description = [row['Saaja/Maksja'], row['Selgitus']].compact.join(' ')
+        description = [row["Saaja/Maksja"], row["Selgitus"]].compact.join(" ")
         amount = row["Summa"].gsub(",", ".").to_f
         debit_credit = row["Deebet/Kreedit"]
       end
