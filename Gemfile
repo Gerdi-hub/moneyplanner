@@ -77,12 +77,12 @@ gem "factory_bot_rails", "~> 6.2", group: [:development, :test]
 gem "money-rails", "~> 1.15"
 
 # Chartkick for charts and graphs
+gem "groupdate", "~> 6.1"
 
-gem "groupdate", "~> 6.1" # Recommended for advanced grouping in Chartkick
 
-gem "sassc-rails"
 gem "jquery-rails", "~> 4.6"
 gem "chartkick"
 
 gem "select2-rails"
+gem "sassc-rails"
 
