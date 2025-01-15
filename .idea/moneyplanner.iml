@@ -72,6 +72,7 @@
     <orderEntry type="library" scope="PROVIDED" name="execjs (v2.10.0, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="factory_bot (v6.5.0, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="factory_bot_rails (v6.4.4, mise: 3.3.6) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="faker (v3.5.1, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="ffi (v1.17.1, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="fugit (v1.11.1, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="globalid (v1.2.1, mise: 3.3.6) [gem]" level="application" />

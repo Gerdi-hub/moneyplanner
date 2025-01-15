@@ -73,6 +73,8 @@ gem "rspec-rails", "~> 6.0", group: [:development, :test]
 # FactoryBot for test factories
 gem "factory_bot_rails", "~> 6.2", group: [:development, :test]
 
+gem 'faker'
+
 # Money-Rails for handling money
 gem "money-rails", "~> 1.15"
 
