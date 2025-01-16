@@ -1,0 +1,93 @@
+<% if current_user %>
+  <div class="container">
+    <h2>Group Cashflow Summary</h2>
+    <% if @available_groups.any? %>
+      <form action="<%= group_cashflow_path %>" method="get">
+        <label>Select a group:</label>
+        <div>
+          <% @available_groups.each do |group| %>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="group_id" id="group_<%= group.id %>" value="<%= group.id %>" <%= 'checked' if @group&.id == group.id %>>
+              <label class="form-check-label" for="group_<%= group.id %>">
+                <%= group.name %>
+              </label>
+            </div>
+          <% end %>
+        </div>
+        <button type="submit" class="btn btn-outline-secondary btn-sm me-2">Filter</button>
+      </form>
+    <% else %>
+      <p>No groups available.</p>
+    <% end %>
+
+    <% if @group %>
+      <h3><%= @group.name %></h3>
+      <form action="<%= group_cashflow_path %>" method="get">
+        <!-- Add hidden field to maintain group selection -->
+        <input type="hidden" name="group_id" value="<%= @group.id %>">
+
+        <label>Select months:</label>
+        <div>
+          <% if @available_months.present? %>
+            <% @available_months.each do |year, months| %>
+              <div class="form-group">
+                <h5><%= year %></h5>
+                <% months.each do |month| %>
+                  <div class="form-check">
+                    <input class="form-check-input"
+                           type="checkbox"
+                           name="months[]"
+                           id="month_<%= month %>"
+                           value="<%= month %>"
+                           <%= 'checked' if params[:months].blank? || params[:months]&.include?(month) %>>
+                    <label class="form-check-label" for="month_<%= month %>">
+                      <%= Date.strptime(month, '%m-%Y').strftime('%B %Y') %>
+                    </label>
+                  </div>
+                <% end %>
+              </div>
+            <% end %>
+          <% else %>
+            <p>No cashflows found for this group.</p>
+          <% end %>
+        </div>
+        <button type="submit" class="btn btn-outline-secondary btn-sm me-2">Filter</button>
+      </form>
+
+      <% if @monthly_data.present? %>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Type</th>
+            <% @monthly_data.values.first.keys.each do |month| %>
+              <th><%= Date.strptime(month, '%m-%Y').strftime('%B %Y') %></th>
+            <% end %>
+          </tr>
+          </thead>
+          <tbody>
+          <% @monthly_data.each do |type_name, months| %>
+            <tr>
+              <td><%= type_name %></td>
+              <% months.each do |month, amount| %>
+                <td><%= Money.new(amount * 100, "EUR").format %></td>
+              <% end %>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+
+        <%= line_chart(
+              Cashflow.where(user_id: @group.memberships.pluck(:user_id))
+                      .group(:type_name)
+                      .group_by_month(:date)
+                      .sum(:amount)
+                      .transform_keys { |(type_name, date)| [type_name || "Unspecified", date] }
+            ) %>
+      <% end %>
+    <% else %>
+      <p>No group selected.</p>
+    <% end %>
+  </div>
+<% else %>
+  <p>You need to <%= link_to 'sign in', new_user_session_path %> to view this page.</p>
+<% end %>
