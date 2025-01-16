@@ -74,14 +74,24 @@
             </tr>
           <% end %>
           </tbody>
+          <tfoot class="table-secondary">
+          <% ["Debit Total", "Credit Total", "Difference"].each do |total_type| %>
+            <tr>
+              <td><strong><%= total_type %></strong></td>
+              <% @monthly_totals.each do |month, totals| %>
+                <td><strong><%= Money.new(totals[total_type] * 100, "EUR").format %></strong></td>
+              <% end %>
+            </tr>
+          <% end %>
+          </tfoot>
         </table>
 
         <%= line_chart(
-              Cashflow.where(user_id: @group.memberships.pluck(:user_id))
-                      .group(:type_name)
-                      .group_by_month(:date)
-                      .sum(:amount)
-                      .transform_keys { |(type_name, date)| [type_name || "Unspecified", date] }
+              @base_cashflows
+                .group(:type_name)
+                .group_by_month(:date)
+                .sum(:amount)
+                .transform_keys { |(type_name, date)| [type_name || "Unspecified", date] }
             ) %>
       <% end %>
     <% else %>
