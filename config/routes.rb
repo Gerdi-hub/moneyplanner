@@ -26,8 +26,13 @@ Rails.application.routes.draw do
 
 
   resources :keywords
+  resources :groups do
+    member do
+      post "join"
+    end
+  end
 
-  post 'import_records', to: 'cashflows#import'
+  post "import_records", to: "cashflows#import"
 
 
 end

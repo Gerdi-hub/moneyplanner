@@ -16,7 +16,9 @@ module Moneyplanner
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
-
+    config.log_level = :debug
+    config.log_tags = [:request_id]
+    config.logger = ActiveSupport::Logger.new("log/#{Rails.env}.log")
     require "devise"
     # Configuration for the application, engines, and railties goes here.
     #

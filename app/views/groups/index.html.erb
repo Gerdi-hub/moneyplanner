@@ -1,0 +1,47 @@
+<div class="container">
+
+<h1>Groups</h1>
+
+<h2>My Groups</h2>
+<% if current_user.memberships.empty? %>
+  <p>No groups available.</p>
+<% else %>
+  <table>
+    <thead>
+    <tr>
+      <th>Group Name</th>
+      <th>Members</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% current_user.memberships.each do |membership| %>
+      <tr>
+        <td><%= link_to membership.group.name, group_path(membership.group) %></td>
+        <td>
+          <% members = membership.group.users.map(&:username).join(', ') %>
+          <%= members %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+<%= link_to 'New Group', new_group_path %>
+
+<h2>Existing Groups</h2>
+<% if @groups.empty? %>
+  <p>No groups available.</p>
+<% else %>
+  <ul>
+    <% @groups.each do |group| %>
+      <li>
+        <%= link_to group.name, group_path(group) %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
+
+
+</div>

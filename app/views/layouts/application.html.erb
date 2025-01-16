@@ -55,6 +55,9 @@
           <li class="nav-item">
             <%= link_to 'Keywords', keywords_path, class: "nav-link" %>
           </li>
+          <li class="nav-item">
+            <%= link_to 'Groups', groups_path, class: "nav-link" %>
+          </li>
           <% if user_signed_in? %>
             <li class="nav-item">
               <%= button_to "Add Cashflow", new_cashflow_path, method: :get, class: "btn btn-outline-primary nav-link" %>

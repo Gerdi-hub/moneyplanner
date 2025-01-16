@@ -1,0 +1,7 @@
+<h1><%= @group.name %></h1>
+
+<% if @group.memberships.where(user: current_user).exists? %>
+  <p>You are already a member of this group.</p>
+<% else %>
+  <%= link_to 'Join Group', join_group_path(@group), method: :post %>
+<% end %>
