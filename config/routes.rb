@@ -21,7 +21,6 @@ Rails.application.routes.draw do
 
 
   resources :cashflows
-  resources :expenses
   root to: "home#index"
 
 
@@ -35,9 +34,6 @@ Rails.application.routes.draw do
     get "cashflow", on: :member
   end
 
-=begin
-  get "groups/cashflow", to: "groups#group_cashflow", as: :group_cashflow
-=end
   get "group_cashflow", to: "groups#group_cashflow", as: :group_cashflow
 
   post "import_records", to: "cashflows#import"
