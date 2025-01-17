@@ -1,12 +1,14 @@
 <div class="container">
 
 <h2>Monthly Cashflow Summary</h2>
-<div class="table-responsive">
+
   <% if @current_user %>
     <form action="/" method="get">
       <label>Select years and months</label>
-      <div>
+      <div class="row">
+
         <% @available_months.group_by(&:year).each do |year, months| %>
+          <div class="col-1">
           <div class="form-group">
             <h5><%= year %></h5>
             <% months.each do |month| %>
@@ -18,12 +20,14 @@
               </div>
             <% end %>
           </div>
+          </div>
         <% end %>
+
       </div>
       <button type="submit" class="btn btn-outline-secondary btn-sm me-2">Filter</button>
     </form>
 
-
+    <div class="table-responsive">
 
     <table class="table">
       <thead>
@@ -50,17 +54,17 @@
       <tfoot>
       <% ["Debit Total", "Credit Total", "Difference"].each do |label| %>
         <tr class="table-secondary">
-          <td><%= label %></td>
+          <td><strong><%= label %></strong></td>
           <% @monthly_data.each do |_, types| %>
-            <td>
+            <td><strong>
               <%= Money.new((types[label] || 0) * 100, "EUR").format %>
-            </td>
+              </strong></td>
           <% end %>
         </tr>
       <% end %>
       </tfoot>
     </table>
-
+    </div>
 
     <%= line_chart @cashflows.group(:type_name).group_by_month(:date).sum(:amount).transform_keys { |(type_name, date)| [type_name || "Unspecified", date] } %>
 
@@ -70,6 +74,6 @@
     <p>You need to <%= link_to 'sign in', new_user_session_path %>
       or <%= link_to 'sign up', new_user_registration_path %> before continuing.</p>
   <% end %>
-</div>
+
 </div>
 

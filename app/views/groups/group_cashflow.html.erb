@@ -1,6 +1,8 @@
 <% if current_user %>
   <div class="container">
     <h2>Group Cashflow Summary</h2>
+    <div class="row">
+      <div class="col-2">
     <% if @available_groups.any? %>
       <form action="<%= group_cashflow_path %>" method="get">
         <label>Select a group:</label>
@@ -19,7 +21,8 @@
     <% else %>
       <p>No groups available.</p>
     <% end %>
-
+      </div>
+      <div class="col-5">
     <% if @group %>
       <h3><%= @group.name %></h3>
       <form action="<%= group_cashflow_path %>" method="get">
@@ -27,9 +30,10 @@
         <input type="hidden" name="group_id" value="<%= @group.id %>">
 
         <label>Select months:</label>
-        <div>
+        <div class="row">
           <% if @available_months.present? %>
             <% @available_months.each do |year, months| %>
+              <div class="col">
               <div class="form-group">
                 <h5><%= year %></h5>
                 <% months.each do |month| %>
@@ -46,14 +50,17 @@
                   </div>
                 <% end %>
               </div>
+              </div>
             <% end %>
           <% else %>
             <p>No cashflows found for this group.</p>
           <% end %>
         </div>
+
         <button type="submit" class="btn btn-outline-secondary btn-sm me-2">Filter</button>
       </form>
-
+        </div>
+          </div>
       <% if @monthly_data.present? %>
         <table class="table">
           <thead>
