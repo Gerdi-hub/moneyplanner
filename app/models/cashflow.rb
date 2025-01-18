@@ -3,6 +3,7 @@ class Cashflow < ApplicationRecord
   validates :amount, presence: true, numericality: { other_than: 0 }
   validates :description, presence: true, length: { maximum: 200 }
   validates :type_name, length: { maximum: 50 }
+  validates :date, presence: true
 
   scope :active, -> { where(deleted_at: nil) }
   scope :deleted, -> { where.not(deleted_at: nil) }

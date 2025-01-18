@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_17_122130) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_18_185838) do
   create_table "cashflows", force: :cascade do |t|
     t.decimal "amount"
     t.string "description"
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "date"
+    t.date "date", null: false
     t.datetime "deleted_at"
     t.string "credit_debit"
     t.string "type_name"
@@ -62,7 +62,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_17_122130) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
-  add_foreign_key "cashflows", "users", primary_key: "id"
+  add_foreign_key "cashflows", "users"
   add_foreign_key "memberships", "groups"
   add_foreign_key "memberships", "users"
 end
