@@ -4,7 +4,7 @@ RSpec.describe 'HomeController', type: :request do
   let(:user) { create(:user) }
 
   before do
-    sign_in user
+    post user_session_path, params: { user: { email: user.email, password: user.password } }
   end
 
   it 'responds successfully to index when logged in' do
