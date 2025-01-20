@@ -9,8 +9,8 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 pin "@rails/ujs", to: "https://ga.jspm.io/npm:@rails/ujs@7.0.4/lib/assets/compiled/rails-ujs.js"
 
 pin "controllers", to: "controllers/index.js"
-pin "bootstrap", to: "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-pin "@popperjs/core", to: "https://ga.jspm.io/npm:@popperjs/core@2.11.8/lib/index.js"
+pin "bootstrap", to: "bootstrap.min.js", preload: true
+pin "@popperjs/core", to: "popper.js", preload: true
 
 pin "jquery", to: "https://code.jquery.com/jquery-3.6.0.min.js"
 
