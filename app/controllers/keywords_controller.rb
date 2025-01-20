@@ -27,7 +27,7 @@ class KeywordsController < ApplicationController
     if @keyword.update(keyword_params)
       redirect_to keywords_path, notice: "Keyword updated successfully!"
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
