@@ -8,7 +8,7 @@
       <div class="row">
 
         <% @available_months.group_by(&:year).each do |year, months| %>
-          <div class="col-1">
+          <div class="col-2">
           <div class="form-group">
             <h5><%= year %></h5>
             <% months.each do |month| %>

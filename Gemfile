@@ -60,6 +60,8 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+  gem "shoulda-matchers", "~> 6.0"
+  gem "rails-controller-testing", "~> 1.0.5"
 end
 
 gem "devise"
@@ -73,7 +75,7 @@ gem "rspec-rails", "~> 6.0", group: [:development, :test]
 # FactoryBot for test factories
 gem "factory_bot_rails", "~> 6.2", group: [:development, :test]
 
-gem 'faker'
+gem "faker"
 
 # Money-Rails for handling money
 gem "money-rails", "~> 1.15"

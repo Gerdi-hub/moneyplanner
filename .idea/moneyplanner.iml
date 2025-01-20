@@ -30,6 +30,7 @@
     <orderEntry type="library" name="bootstrap-icons" level="application" />
     <orderEntry type="library" name="@popperjs/core" level="application" />
     <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="@popperjs" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actioncable (v8.0.1, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actionmailbox (v8.0.1, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="actionmailer (v8.0.1, mise: 3.3.6) [gem]" level="application" />
@@ -122,6 +123,7 @@
     <orderEntry type="library" scope="PROVIDED" name="rack-test (v2.2.0, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rackup (v2.2.1, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails (v8.0.1, mise: 3.3.6) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="rails-controller-testing (v1.0.5, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails-dom-testing (v2.2.0, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rails-html-sanitizer (v1.6.2, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="railties (v8.0.1, mise: 3.3.6) [gem]" level="application" />
@@ -150,6 +152,7 @@
     <orderEntry type="library" scope="PROVIDED" name="securerandom (v0.4.1, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="select2-rails (v4.0.13, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="selenium-webdriver (v4.27.0, mise: 3.3.6) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="shoulda-matchers (v6.4.0, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="solid_cable (v3.0.5, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="solid_cache (v1.0.6, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="solid_queue (v1.1.2, mise: 3.3.6) [gem]" level="application" />
@@ -176,7 +179,6 @@
     <orderEntry type="library" scope="PROVIDED" name="websocket-extensions (v0.1.5, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="xpath (v3.2.0, mise: 3.3.6) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="zeitwerk (v2.7.1, mise: 3.3.6) [gem]" level="application" />
-    <orderEntry type="library" name="@popperjs" level="application" />
   </component>
   <component name="RModuleSettingsStorage">
     <LOAD_PATH number="0" />
