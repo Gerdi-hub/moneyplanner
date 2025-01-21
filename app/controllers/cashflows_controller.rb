@@ -1,6 +1,8 @@
 class CashflowsController < ApplicationController
   require "csv"
   before_action :authenticate_user!
+  before_action :set_cashflow, only: [:update, :destroy]
+  before_action :ensure_owner, only: [:update, :destroy]
 
   def index
     @current_user = current_user
@@ -66,7 +68,7 @@ class CashflowsController < ApplicationController
   end
 
   def destroy
-    @cashflow = current_user.cashflows.find(params[:id]) # Corrected to `cashflows`
+    @cashflow = current_user.cashflows.find(params[:id])
     @cashflow.soft_delete
     redirect_to cashflows_path, notice: "Cashflow marked as deleted!"
   end
@@ -113,6 +115,17 @@ class CashflowsController < ApplicationController
   end
 
   private
+
+  def set_cashflow
+    @cashflow = Cashflow.find(params[:id])  # Find any cashflow
+  end
+
+  def ensure_owner
+    unless @cashflow.user_id == current_user.id
+      render json: { error: "Not authorized" }, status: :forbidden
+    end
+  end
+
 
   def process_csv_rows(file, csv_options, bank:)
     CSV.foreach(file.path, "r", **csv_options) do |row|
