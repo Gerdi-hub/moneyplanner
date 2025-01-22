@@ -107,6 +107,38 @@ RSpec.describe "Cashflows", type: :request do
     end
   end
 
+  describe "PATCH /cashflows/:id" do
+      let (:cashflow) { create(:cashflow, user: user) }
+      it "updates the requested cashflow with valid params" do
+        get edit_cashflow_path(cashflow)
+        expect(response).to have_http_status(:success)
+
+        updated_attributes = {
+          amount: 200.0,
+          description: "Updated description",
+          date: "2025-01-23",
+          type_name: "Updated type"
+        }
+
+        patch cashflow_path(cashflow), params: { cashflow: updated_attributes }
+        expect(response).to have_http_status(:redirect)
+        follow_redirect!
+        expect(response).to have_http_status(:success)
+        cashflow.reload
+        expect(cashflow.amount).to eq(200.0)
+        expect(cashflow.description).to eq("Updated description")
+        expect(cashflow.date.to_s).to eq("2025-01-23")
+        expect(cashflow.type_name).to eq("Updated type")
+      end
+
+      it "can not update cashflow with invalid params" do
+        get edit_cashflow_path(cashflow)
+        updated_description = { description: nil }
+        patch cashflow_path(cashflow), params: { cashflow: updated_description }
+        assert_response :unprocessable_entity
+      end
+  end
+
   describe "DELETE /cashflows/:id" do
     context "when the user owns the cashflow" do
       it "soft-deletes the cashflow and redirects to the index" do
