@@ -16,6 +16,11 @@ RSpec.describe Cashflow, type: :model do
     expect(cashflow).not_to be_valid
   end
 
+  it "sets credit_debit value to credit, if negative" do
+    cashflow = create(:cashflow, amount: "-1")
+    expect(cashflow.credit_debit).to eq("credit")
+  end
+
   it "is invalid without a description" do
     cashflow = build(:cashflow, description: nil)
     expect(cashflow).not_to be_valid
@@ -29,6 +34,12 @@ RSpec.describe Cashflow, type: :model do
     user = create(:user)
     cashflow = build(:cashflow, user: user)
     expect(cashflow).to be_valid
+  end
+  
+  it "assignes correct type_name" do
+    create(:keyword, name: "test_keyword", type_name: "test_type")
+    cashflow = create(:cashflow, description: "test_keyword")
+    expect(cashflow.type_name).to eq("test_type")
   end
 
 end

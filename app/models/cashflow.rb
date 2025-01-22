@@ -27,7 +27,7 @@ class Cashflow < ApplicationRecord
   end
 
   def assign_type_name_based_on_keyword
-    return if type_name.present? # Do not overwrite if the user has manually set type_name
+    return if type_name.present?
     return unless description.present?
 
     matching_keyword = Keyword.find_by("LOWER(?) LIKE LOWER(CONCAT('%', name, '%'))", description)

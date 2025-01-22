@@ -94,7 +94,7 @@ class CashflowsController < ApplicationController
     Rails.logger.debug "Started processing CSV file"
 
     begin
-      csv_options = { col_sep: ";", headers: true, encoding: "r:bom|utf-8" }
+      csv_options = { col_sep: ";", headers: true, encoding: "utf-8" }
       first_row = CSV.open(file.path, "r", **csv_options).first
       headers = first_row&.headers
 
