@@ -141,6 +141,7 @@ RSpec.describe "Cashflows", type: :request do
 
   describe "Post /import_records" do
     let(:seb_csv) { load_seb_fixture }
+    let(:swed_csv) { load_swed_fixture }
     context 'with valid SEB CSV' do
       it 'successfully imports transactions from SEB CSV' do
         expect { post import_records_path, params: { file: seb_csv } }.to change(Cashflow, :count).by(2)
@@ -152,5 +153,18 @@ RSpec.describe "Cashflows", type: :request do
         expect(last_cashflow.credit_debit).to eq("debit")
       end
     end
+
+    context 'with valid SWEDBANK CSV' do
+      it 'successfully imports transactions from SWEDBANK CSV' do
+        expect { post import_records_path, params: { file: swed_csv } }.to change(Cashflow, :count).by(2)
+        post import_records_path, params: { file: swed_csv }
+        last_cashflow = Cashflow.last
+        expect(last_cashflow.amount).to eq(BigDecimal("-200.0"))
+        expect(last_cashflow.description).to eq("Test swed, rida 2 Easy Saver")
+        expect(last_cashflow.date).to eq(Date.parse("2025-01-03"))
+        expect(last_cashflow.credit_debit).to eq("credit")
+      end
+    end
   end
 end
+
