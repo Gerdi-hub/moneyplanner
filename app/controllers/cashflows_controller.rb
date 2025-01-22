@@ -146,7 +146,7 @@ class CashflowsController < ApplicationController
         debit_credit = row["Deebet/Kreedit"]
       end
 
-      amount *= -1 if debit_credit == "D"
+      amount *= -1 if debit_credit == "C" || debit_credit == "K"
 
       Cashflow.create!(
         user: current_user,

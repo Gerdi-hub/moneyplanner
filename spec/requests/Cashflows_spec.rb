@@ -6,6 +6,7 @@ RSpec.describe "Cashflows", type: :request do
   let!(:cashflows) { create_list(:cashflow, 3, user: user) }
   let!(:deleted_cashflows) { create_list(:cashflow, 2, :deleted, user: user) }
   let!(:other_users_cashflows) { create_list(:cashflow, 2, user: other_user) }
+  include CsvHelper
 
   before do
     post user_session_path, params: { user: { email: user.email, password: user.password } }
@@ -134,6 +135,21 @@ RSpec.describe "Cashflows", type: :request do
         cashflow_to_delete.reload
         expect(cashflow_to_delete.deleted_at).to be_nil
         expect(response).to have_http_status(:forbidden)
+      end
+    end
+  end
+
+  describe "Post /import_records" do
+    let(:seb_csv) { load_seb_fixture }
+    context 'with valid SEB CSV' do
+      it 'successfully imports transactions from SEB CSV' do
+        expect { post import_records_path, params: { file: seb_csv } }.to change(Cashflow, :count).by(2)
+        post import_records_path, params: { file: seb_csv }
+        last_cashflow = Cashflow.last
+        expect(last_cashflow.amount).to eq(BigDecimal("50.0"))
+        expect(last_cashflow.description).to eq("Grete Test seb, rida2")
+        expect(last_cashflow.date).to eq(Date.parse("2024-12-18"))
+        expect(last_cashflow.credit_debit).to eq("debit")
       end
     end
   end
