@@ -2,27 +2,27 @@ require 'rails_helper'
 
 RSpec.describe Keyword, type: :model do
   it "is valid with valid attributes" do
-    keyword = FactoryBot.build(:keyword)
+    keyword = build(:keyword)
     expect(keyword).to be_valid
   end
 
   it "is invalid without a name" do
-    keyword = FactoryBot.build(:keyword, name: nil)
+    keyword = build(:keyword, name: nil)
     expect(keyword).not_to be_valid
   end
 
   it "is invalid without a type_name" do
-    keyword = FactoryBot.build(:keyword, type_name: nil)
+    keyword = build(:keyword, type_name: nil)
     expect(keyword).not_to be_valid
   end
 
   it "is invalid with a too long name" do
-    keyword = FactoryBot.build(:keyword, name: Faker::Lorem.characters(number: 200))
+    keyword = build(:keyword, name: Faker::Lorem.characters(number: 200))
     expect(keyword).not_to be_valid
   end
 
   it "is invalid with a too long type_name" do
-    keyword = FactoryBot.build(:keyword, type_name: Faker::Lorem.characters(number: 200))
+    keyword = build(:keyword, type_name: Faker::Lorem.characters(number: 200))
     expect(keyword).not_to be_valid
   end
 
