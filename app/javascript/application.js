@@ -14,8 +14,9 @@ import Rails from "@rails/ujs";
 
 Rails.start();
 
+console.log("APPLICATION.JS LOADED");
+
 document.addEventListener('turbo:load', function() {
-    // Initialize all collapsible elements
     var collapsibles = document.querySelectorAll('[data-bs-toggle="collapse"]');
     collapsibles.forEach(function(element) {
         new bootstrap.Collapse(element.dataset.bsTarget, {
@@ -23,3 +24,23 @@ document.addEventListener('turbo:load', function() {
         });
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('input[type="checkbox"][id^="select_all_year_"]').forEach(function (yearCheckbox) {
+        yearCheckbox.addEventListener('change', function () {
+            const year = this.getAttribute('data-year');
+            const isChecked = this.checked;
+            console.log('Checkbox for year ' + year + ' is ' + (isChecked ? 'checked' : 'unchecked'));
+            document.querySelectorAll(`#year${year} .month-checkbox`).forEach(function (monthCheckbox) {
+                monthCheckbox.checked = isChecked;
+            });
+        });
+    });
+});
+
+console.error("APPLICATION.JS LOADED DEFINITIVELY");
+window.globalTestFunction = function() {
+    console.error("GLOBAL TEST FUNCTION CALLED");
+    alert("Definitive JavaScript Test");
+};

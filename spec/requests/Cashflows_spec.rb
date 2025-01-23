@@ -37,6 +37,29 @@ RSpec.describe "Cashflows", type: :request do
       fetched_ids = assigns(:user_cashflows).map(&:id)
       expect(fetched_ids).not_to include(*other_users_ids)
     end
+
+    it "fetches correct year cashflows" do
+
+      cashflow_2024 = create(:cashflow, user: user, date: Date.new(2024, 1, 1))
+      cashflow_2025 = create(:cashflow, user: user, date: Date.new(2025, 2, 1))
+
+      get cashflows_path, params: { years: ["2024"] }
+      expect(response).to have_http_status(:success)
+      expect(assigns(:cashflows).map(&:id)).to include(cashflow_2024.id)
+      expect(assigns(:cashflows).map(&:id)).not_to include(cashflow_2025.id)
+    end
+
+    it "fetches correct month cashflows" do
+
+        cashflow_01 = create(:cashflow, user: user, date: Date.new(2024, 1, 1))
+        cashflow_02 = create(:cashflow, user: user, date: Date.new(2024, 2, 1))
+
+        get cashflows_path, params: { months: ["01-2024"] }
+
+        expect(response).to have_http_status(:success)
+        expect(assigns(:cashflows).map(&:id)).to include(cashflow_01.id)
+        expect(assigns(:cashflows).map(&:id)).not_to include(cashflow_02.id)
+    end
   end
 
   describe "POST /cashflows" do

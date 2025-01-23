@@ -7,13 +7,15 @@ class CashflowsController < ApplicationController
   def index
     @current_user = current_user
     @user_cashflows = current_user.cashflows.active
-    # Get all available years from cashflow records
-    @available_years = @user_cashflows.distinct.pluck(Arel.sql("strftime('%Y', date)")).sort.reverse
+
+    @available_years = @user_cashflows.distinct.pluck(Arel.sql("strftime('%Y', date)")).sort.reverse.map {|year| Date.strptime(year, " %Y") }
     @available_months = @user_cashflows.distinct.pluck(Arel.sql("strftime('%m-%Y', date)")).sort.reverse.map { |month| Date.strptime(month, "%m-%Y") }
 
     if params[:years].present?
       @selected_years = params[:years]
       @cashflows = @user_cashflows.where(Arel.sql("strftime('%Y', date) IN (?)"), @selected_years)
+      Rails.logger.debug("params[:years]: #{params[:years].inspect}")
+      Rails.logger.debug("Filtered cashflows: #{@cashflows.pluck(:id, :date).inspect}")
     else
       @selected_years = []
       @cashflows = @user_cashflows.all
@@ -22,10 +24,14 @@ class CashflowsController < ApplicationController
     if params[:months].present?
       @selected_months = params[:months]
       @cashflows = @user_cashflows.where(Arel.sql("strftime('%m-%Y', date) IN (?)"), @selected_months)
+
     else
       @selected_months = []
+=begin
       @cashflows = @user_cashflows.all
+=end
     end
+
 
     @monthly_data = @cashflows.group_by do |cashflow|
       cashflow.date.strftime("%m-%Y")
