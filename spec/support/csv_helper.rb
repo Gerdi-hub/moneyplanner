@@ -16,4 +16,13 @@ module CsvHelper
       true
     )
   end
+
+  def load_invalid_fixture
+    fixture_path = Rails.root.join('spec/fixtures/files/test_invalid.csv')
+    Rack::Test::UploadedFile.new(
+      fixture_path,
+      'text/csv',
+      true
+    )
+  end
 end

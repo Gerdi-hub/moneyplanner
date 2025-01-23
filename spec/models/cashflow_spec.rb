@@ -40,6 +40,7 @@ RSpec.describe Cashflow, type: :model do
     create(:keyword, name: "test_keyword", type_name: "test_type")
     cashflow = create(:cashflow, description: "test_keyword")
     expect(cashflow.type_name).to eq("test_type")
+
   end
 
 end

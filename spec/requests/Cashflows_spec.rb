@@ -174,6 +174,7 @@ RSpec.describe "Cashflows", type: :request do
   describe "Post /import_records" do
     let(:seb_csv) { load_seb_fixture }
     let(:swed_csv) { load_swed_fixture }
+    let(:invalid_csv) { load_invalid_fixture }
     context 'with valid SEB CSV' do
       it 'successfully imports transactions from SEB CSV' do
         expect { post import_records_path, params: { file: seb_csv } }.to change(Cashflow, :count).by(2)
@@ -195,6 +196,13 @@ RSpec.describe "Cashflows", type: :request do
         expect(last_cashflow.description).to eq("Test swed, rida 2 Easy Saver")
         expect(last_cashflow.date).to eq(Date.parse("2025-01-03"))
         expect(last_cashflow.credit_debit).to eq("credit")
+      end
+    end
+
+    context 'with invalid CSV' do
+      it 'can not import invalid CSV' do
+        post import_records_path, params: { file: invalid_csv }
+        expect(flash[:alert]).to include("Error importing CSV: Unsupported CSV format")
       end
     end
   end
