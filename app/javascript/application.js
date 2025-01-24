@@ -26,7 +26,7 @@ document.addEventListener('turbo:load', function() {
 });
 
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('turbo:load', function () {
     document.querySelectorAll('input[type="checkbox"][id^="select_all_year_"]').forEach(function (yearCheckbox) {
         yearCheckbox.addEventListener('change', function () {
             const year = this.getAttribute('data-year');
@@ -38,9 +38,3 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
-
-console.error("APPLICATION.JS LOADED DEFINITIVELY");
-window.globalTestFunction = function() {
-    console.error("GLOBAL TEST FUNCTION CALLED");
-    alert("Definitive JavaScript Test");
-};

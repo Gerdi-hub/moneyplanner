@@ -1,6 +1,6 @@
 <div class="container">
 
-<h2>Monthly Cashflow Summary</h2>
+  <h2>Monthly Cashflow Summary</h2>
 
   <% if @current_user %>
     <form action="/" method="get">
@@ -9,17 +9,27 @@
 
         <% @available_months.group_by(&:year).each do |year, months| %>
           <div class="col-2">
-          <div class="form-group">
-            <h5><%= year %></h5>
-            <% months.each do |month| %>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="months[]" id="month_<%= month %>" value="<%= month.strftime("%m-%Y") %>"<%= 'checked' if @selected_months.include?(month.strftime("%m-%Y")) %>>
-                <label class="form-check-label" for="month_<%= month %>">
-                  <%= month.strftime("%B") %>
-                </label>
+            <div class="form-group">
+              <input type="checkbox" class="form-check-input me-2" id="select_all_year_<%= year %>"
+                     data-year="<%= year %>">
+              <span class="d-inline m-0 fs-5 fw-bold"><%= year %></span>
+
+              <div id="year<%= year %>">
+                <% months.each do |month| %>
+                  <div class="form-check">
+                    <input class="form-check-input month-checkbox"
+                           type="checkbox"
+                           name="months[]"
+                           id="month_<%= month %>"
+                           value="<%= month.strftime("%m-%Y") %>"
+                           <%= 'checked' if @selected_months.include?(month.strftime("%m-%Y")) %>>
+                    <label class="form-check-label" for="month_<%= month %>">
+                      <%= month.strftime("%B") %>
+                    </label>
+                  </div>
+                <% end %>
               </div>
-            <% end %>
-          </div>
+            </div>
           </div>
         <% end %>
 
@@ -29,45 +39,44 @@
 
     <div class="table-responsive">
 
-    <table class="table">
-      <thead>
-      <tr>
-        <th>Type</th>
-        <% @monthly_data.keys.each do |month| %>
-          <th><%= month %></th>
-        <% end %>
-      </tr>
-      </thead>
-      <tbody>
-      <% @row_labels.each do |label| %>
-        <% next if @monthly_data.all? { |_, types| (types[label] || 0).zero? } %>
+      <table class="table">
+        <thead>
         <tr>
-          <td><%= label.presence || "Unspecified" %></td>
-          <% @monthly_data.each do |_, types| %>
-            <td>
-              <%= Money.new((types[label] || 0) * 100, "EUR").format %>
-            </td>
+          <th>Type</th>
+          <% @monthly_data.keys.each do |month| %>
+            <th><%= month %></th>
           <% end %>
         </tr>
-      <% end %>
-      </tbody>
-      <tfoot>
-      <% ["Debit Total", "Credit Total", "Difference"].each do |label| %>
-        <tr class="table-secondary">
-          <td><strong><%= label %></strong></td>
-          <% @monthly_data.each do |_, types| %>
-            <td><strong>
-              <%= Money.new((types[label] || 0) * 100, "EUR").format %>
+        </thead>
+        <tbody>
+        <% @row_labels.each do |label| %>
+          <% next if @monthly_data.all? { |_, types| (types[label] || 0).zero? } %>
+          <tr>
+            <td><%= label.presence || "Unspecified" %></td>
+            <% @monthly_data.each do |_, types| %>
+              <td>
+                <%= Money.new((types[label] || 0) * 100, "EUR").format %>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
+        </tbody>
+        <tfoot>
+        <% ["Debit Total", "Credit Total", "Difference"].each do |label| %>
+          <tr class="table-secondary">
+            <td><strong><%= label %></strong></td>
+            <% @monthly_data.each do |_, types| %>
+              <td><strong>
+                <%= Money.new((types[label] || 0) * 100, "EUR").format %>
               </strong></td>
-          <% end %>
-        </tr>
-      <% end %>
-      </tfoot>
-    </table>
+            <% end %>
+          </tr>
+        <% end %>
+        </tfoot>
+      </table>
     </div>
 
     <%= line_chart @cashflows.group(:type_name).group_by_month(:date).sum(:amount).transform_keys { |(type_name, date)| [type_name || "Unspecified", date] } %>
-
 
 
   <% else %>
