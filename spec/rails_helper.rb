@@ -10,6 +10,7 @@ require 'factory_bot_rails'
 require 'support/database_cleaner'
 require 'support/csv_helper'
 require 'simplecov'
+require 'shoulda/matchers'
 SimpleCov.start do
   add_group "Models", "app/models"
   add_group "Controllers", "app/controllers"

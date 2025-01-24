@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+  get "users/show"
 
   devise_for :users, controllers: {
     registrations: "users/registrations"
   }
+  resources :users, only: [:show]
 
   get "home/index"
 
@@ -37,6 +39,7 @@ Rails.application.routes.draw do
   get "group_cashflow", to: "groups#group_cashflow", as: :group_cashflow
 
   post "import_records", to: "cashflows#import"
+  get "users/show"
 
 
 end
