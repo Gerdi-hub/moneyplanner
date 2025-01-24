@@ -14,8 +14,7 @@ class CashflowsController < ApplicationController
     if params[:years].present?
       @selected_years = params[:years]
       @cashflows = @user_cashflows.where(Arel.sql("strftime('%Y', date) IN (?)"), @selected_years)
-      Rails.logger.debug("params[:years]: #{params[:years].inspect}")
-      Rails.logger.debug("Filtered cashflows: #{@cashflows.pluck(:id, :date).inspect}")
+
     else
       @selected_years = []
       @cashflows = @user_cashflows.all
@@ -27,9 +26,6 @@ class CashflowsController < ApplicationController
 
     else
       @selected_months = []
-=begin
-      @cashflows = @user_cashflows.all
-=end
     end
 
 

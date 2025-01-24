@@ -21,8 +21,8 @@
                            type="checkbox"
                            name="months[]"
                            id="month_<%= month %>"
-                           value="<%= month.strftime("%m-%Y") %>"
-                           <%= 'checked' if @selected_months.include?(month.strftime("%m-%Y")) %>>
+                           value="<%= month.strftime("%m-%Y") %>">
+
                     <label class="form-check-label" for="month_<%= month %>">
                       <%= month.strftime("%B") %>
                     </label>
