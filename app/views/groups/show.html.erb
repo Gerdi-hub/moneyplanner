@@ -1,6 +1,6 @@
 <div class="container">
   <h1><%= @group.name %></h1>
-  <br><br>
+
   <% if @group.memberships.where(user: current_user).exists? %>
     <% if current_user == @group.user %>
       <p> You are the creator of the group, you
@@ -11,11 +11,16 @@
       <p>Group created by: <%= @group.user&.username %></p>
     <% end %>
 
-
-    <div>Group members
+    <br>
+    <div><h4>Group members:</h4>
+      <br>
       <% @group.memberships.each do |member| %>
       <ul>
-        <li> <%= member.user.username %></li>
+        <li> <%= member.user.username %>
+        <% if member.user == current_user %>
+          <button class="btn btn-outline-secondary btn-sm me-2" > Remove your membership </button>
+          <% end %>
+        </li>
       </ul>
     <% end %>
     </div>

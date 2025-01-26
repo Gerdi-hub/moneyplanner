@@ -34,66 +34,13 @@
 
 
 <body>
-  <div class="container-lg">
-
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <!-- Brand -->
-      <%= link_to 'Home', root_path, class: "navbar-brand" %>
-
-      <!-- Toggle Button -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <!-- Collapsible Content -->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav me-auto">
-          <li class="nav-item">
-            <%= link_to 'Cashflow', cashflows_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'Keywords', keywords_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'Groups', groups_path, class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to 'Group Cashflows', group_cashflow_path, class: "nav-link" %>
-          </li>
-
-        </ul>
-        <ul class="navbar-nav ms-auto">
-          <% if user_signed_in? %>
-            <li class="nav-item">
-              <%= link_to user_path(current_user), class: "btn btn-outline-secondary me-2" do %>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                  <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
-                </svg>
-                <%= current_user.username %>
-              <% end %>
-            </li>
-            <li class="nav-item">
-              <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "btn btn-outline-danger" %>
-            </li>
-          <% else %>
-            <li class="nav-item">
-              <%= link_to "Sign in", new_user_session_path, class: "btn btn-outline-primary me-2" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Sign up", new_user_registration_path, class: "btn btn-outline-success" %>
-            </li>
-          <% end %>
-        </ul>
-      </div>
-    </div>
-  </nav>
-</div>
+<%= render 'layouts/navbar' %>
 
 <div class="container my-5">
 
 <%= yield %>
 
 </div>
+  <%= render 'layouts/footer' %>
 </body>
 </html>

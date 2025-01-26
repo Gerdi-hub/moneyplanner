@@ -38,3 +38,16 @@ document.addEventListener('turbo:load', function () {
         });
     });
 });
+
+
+
+document.addEventListener('turbo:load', function() {
+    document.querySelector('footer .navbar-brand').addEventListener('click', function(e) {
+
+        console.log("smooth scroll");
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+});
