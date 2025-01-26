@@ -1,24 +1,26 @@
-
 <div class="container">
   <h1><%= @group.name %></h1>
-
-<% if @group.memberships.where(user: current_user).exists? %>
-  <p>You are a member of this group.</p>
-    <% if current_user == @group.user %>
-      <%= link_to "Edit", edit_group_path(@group), class: "btn btn-outline-secondary btn-sm me-2" %>
-      <%= link_to "Delete", group_path(@group), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-secondary btn-sm me-2" %>
-    <% end %>
-<% else %>
-  <%= link_to 'Join Group', join_group_path(@group), method: :post %>
-<% end %>
   <br><br>
-<p>Group greated by: <%= @group.user&.username%></p>
+  <% if @group.memberships.where(user: current_user).exists? %>
+    <% if current_user == @group.user %>
+      <p> You are the creator of the group, you
+        can:  <%= link_to "Edit", edit_group_path(@group), class: "btn btn-outline-secondary btn-sm me-2" %>
+        or <%= link_to "Delete", group_path(@group), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-secondary btn-sm me-2" %>
+        the group. </p>
+    <% else %>
+      <p>Group created by: <%= @group.user&.username %></p>
+    <% end %>
 
-  <p>Group members
-    <% @group.memberships.each do |member| %>
-  <ul>
-    <li> <%= member.user.username %></li>
-  </ul>
+
+    <div>Group members
+      <% @group.memberships.each do |member| %>
+      <ul>
+        <li> <%= member.user.username %></li>
+      </ul>
+    <% end %>
+    </div>
+
+  <% else %>
+    <%= link_to 'Join Group', join_group_path(@group), method: :post %>
   <% end %>
-  </p>
 </div>
