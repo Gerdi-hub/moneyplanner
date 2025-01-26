@@ -32,6 +32,8 @@ Rails.application.routes.draw do
       post "join"
     end
   end
+
+  resources :groups
   resources :groups do
     get "cashflow", on: :member
   end
@@ -39,7 +41,7 @@ Rails.application.routes.draw do
   get "group_cashflow", to: "groups#group_cashflow", as: :group_cashflow
 
   post "import_records", to: "cashflows#import"
-  get "users/show"
+
 
 
 end
