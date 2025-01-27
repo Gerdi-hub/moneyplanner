@@ -40,14 +40,13 @@ document.addEventListener('turbo:load', function () {
 });
 
 
-/*
-document.addEventListener('turbo:load', function() {
-    document.querySelector('footer .footer-brand').addEventListener('click', function(e) {
-
-        console.log("smooth scroll");
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-});*/
+document.addEventListener("turbo:load", function () {
+    const notice = document.getElementById("notice");
+    if (notice) {
+        setTimeout(() => {
+            notice.style.transition = "opacity 2s ease-out";
+            notice.style.opacity = 0;
+            setTimeout(() => notice.remove(), 2000);
+        }, 5000);
+    }
+});
