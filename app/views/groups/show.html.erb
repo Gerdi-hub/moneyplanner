@@ -1,11 +1,11 @@
 <div class="container">
   <h1><%= @group.name %></h1>
 
-  <% if @group.memberships.where(user: current_user).exists? %>
+  <% if @group.memberships.where(user: current_user).exists? || current_user == @group.user %>
     <% if current_user == @group.user %>
       <p> You are the creator of the group, you
-        can:  <%= link_to "Edit", edit_group_path(@group), class: "btn btn-outline-secondary btn-sm me-2" %>
-        or <%= link_to "Delete", group_path(@group), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-secondary btn-sm me-2" %>
+        can:  <%= link_to "Edit", edit_group_path(@group), class: "btn btn-outline-secondary btn-sm me-1" %>
+        or <%= link_to "Delete", group_path(@group), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-secondary btn-sm me-1" %>
         the group. </p>
     <% else %>
       <p>Group created by: <%= @group.user&.username %></p>
@@ -17,15 +17,35 @@
       <% @group.memberships.each do |member| %>
       <ul>
         <li> <%= member.user.username %>
-        <% if member.user == current_user %>
+          <% if current_user == @group.user  %>
+            <% if member.user != current_user %>
+              <%= link_to "Remove", membership_path(member), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-secondary btn-sm me-2" %>
+            <% end %>
+          <% end %>
+          <% if member.user == current_user %>
             <%= link_to "Remove your membership", membership_path(member), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-secondary btn-sm me-2" %>
           <% end %>
+
         </li>
       </ul>
     <% end %>
     </div>
 
+    <% if current_user == @group.user %>
+      <%= form_with url: add_member_group_path(@group), local: true do |form| %>
+        <div class="field">
+          <%= form.label :username, "Add Member" %>
+          <%= form.text_field :username, placeholder: "Enter username" %>
+        </div>
+        <div class="actions">
+          <%= form.submit "Ok", class: "btn btn-outline-secondary btn-sm me-2" %>
+        </div>
+      <% end %>
+    <% end %>
+
+
   <% else %>
-    <%= link_to 'Join Group', join_group_path(@group), method: :post %>
+    <p>You are not a member of this group</p>
+  <!--  <%#= link_to 'Join Group', join_group_path(@group), method: :post %>-->
   <% end %>
 </div>

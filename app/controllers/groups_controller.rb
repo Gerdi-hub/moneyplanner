@@ -136,6 +136,27 @@ class GroupsController < ApplicationController
     end
   end
 
+  def add_member
+    @group = Group.find_by(id: params[:id])
+    if @group.nil?
+      redirect_to groups_path, alert: "Group not found!"
+    else
+      user = User.find_by(username: params[:username])
+
+      if user.nil?
+        redirect_to @group, alert: "User not found!"
+      else
+        membership = @group.memberships.new(user: user)
+
+        if membership.save
+          redirect_to @group, notice: "#{user.username} has been added as a member."
+        else
+          redirect_to @group, alert: "Unable to add member."
+        end
+      end
+    end
+  end
+
 
   private
 

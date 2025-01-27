@@ -39,6 +39,10 @@ Rails.application.routes.draw do
     get "cashflow", on: :member
   end
 
+  resources :groups do
+    post 'add_member', on: :member
+  end
+
   get "group_cashflow", to: "groups#group_cashflow", as: :group_cashflow
 
   post "import_records", to: "cashflows#import"

@@ -8,44 +8,37 @@
 <% if current_user.memberships.empty? %>
   <p>No groups available.</p>
 <% else %>
-  <table class="table">
-    <thead>
-    <tr>
-      <th>Group Name</th>
-      <th>Members</th>
-    </tr>
-    </thead>
-    <tbody>
-    <% current_user.memberships.each do |membership| %>
-      <tr>
-        <td><%= link_to membership.group.name, group_path(membership.group) %></td>
-        <td>
-          <% members = membership.group.users.map(&:username).join(', ') %>
-          <%= members %>
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Group Name</th>
+          <th>Members</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <% all_groups = current_user.memberships.map(&:group) + Group.where(user: current_user).to_a %>
+
+        <% all_groups.uniq.each do |group| %>
+          <tr>
+            <td>
+              <%= link_to group.name, group_path(group) %>
+              <% if group.user == current_user %>
+                (Creator)
+              <% end %>
+            </td>
+            <td>
+              <% members = group.users.map(&:username).join(', ') %>
+              <%= members %>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
 <% end %>
   </div>
   <br><br>
 
-<%= link_to 'Create New Group', new_group_path %>
-  <br><br>
-<h2>Existing Groups</h2>
-<% if @groups.empty? %>
-  <p>No groups available.</p>
-<% else %>
-  <ul>
-    <% @groups.each do |group| %>
-      <li>
-        <%= link_to group.name, group_path(group) %>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
-  <br>
-
+<%= link_to 'Create New Group', new_group_path, class: "btn btn-outline-secondary btn-sm me-2"  %>
 
 </div>
