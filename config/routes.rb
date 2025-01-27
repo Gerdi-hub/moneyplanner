@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 
 
   resources :keywords
+  resources :membership
   resources :groups do
     member do
       post "join"

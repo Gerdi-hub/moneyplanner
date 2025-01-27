@@ -18,7 +18,7 @@
       <ul>
         <li> <%= member.user.username %>
         <% if member.user == current_user %>
-          <button class="btn btn-outline-secondary btn-sm me-2" > Remove your membership </button>
+            <%= link_to "Remove your membership", membership_path(member), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-secondary btn-sm me-2" %>
           <% end %>
         </li>
       </ul>
