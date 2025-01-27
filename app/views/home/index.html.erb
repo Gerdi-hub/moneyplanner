@@ -10,7 +10,7 @@
         <% @available_months.group_by(&:year).each do |year, months| %>
           <div class="col-2">
             <div class="form-group">
-              <input type="checkbox" class="form-check-input me-2" id="select_all_year_<%= year %>"
+              <input type="checkbox" class="form-check-input me-2 year-checkbox" id="select_all_year_<%= year %>"
                      data-year="<%= year %>">
               <span class="d-inline m-0 fs-5 fw-bold"><%= year %></span>
 
@@ -21,7 +21,8 @@
                            type="checkbox"
                            name="months[]"
                            id="month_<%= month %>"
-                           value="<%= month.strftime("%m-%Y") %>">
+                           value="<%= month.strftime("%m-%Y") %>"
+                           <%= params[:months]&.include?(month.strftime("%m-%Y")) ? "checked" : "" %>>
 
                     <label class="form-check-label" for="month_<%= month %>">
                       <%= month.strftime("%B") %>

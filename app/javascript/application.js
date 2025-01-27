@@ -50,3 +50,45 @@ document.addEventListener("turbo:load", function () {
         }, 5000);
     }
 });
+
+document.addEventListener("turbo:load", function () {
+    // Get all year checkboxes
+    const yearCheckboxes = document.querySelectorAll(".year-checkbox");
+
+    yearCheckboxes.forEach((yearCheckbox) => {
+        const year = yearCheckbox.dataset.year;
+        const monthCheckboxes = document.querySelectorAll(
+            `#year${year} .month-checkbox`
+        );
+
+        const updateYearCheckboxState = () => {
+            const checkedMonths = Array.from(monthCheckboxes).filter(
+                (checkbox) => checkbox.checked
+            );
+
+            if (checkedMonths.length === 0) {
+                yearCheckbox.checked = false;
+                yearCheckbox.indeterminate = false;
+            } else if (checkedMonths.length === monthCheckboxes.length) {
+                yearCheckbox.checked = true;
+                yearCheckbox.indeterminate = false;
+            } else {
+                yearCheckbox.checked = false;
+                yearCheckbox.indeterminate = true;
+            }
+        };
+
+        monthCheckboxes.forEach((monthCheckbox) => {
+            monthCheckbox.addEventListener("change", updateYearCheckboxState);
+        });
+
+        yearCheckbox.addEventListener("change", function () {
+            const isChecked = yearCheckbox.checked;
+            monthCheckboxes.forEach((checkbox) => {
+                checkbox.checked = isChecked;
+            });
+        });
+
+        updateYearCheckboxState();
+    });
+});
