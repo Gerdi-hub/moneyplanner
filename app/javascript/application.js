@@ -40,9 +40,9 @@ document.addEventListener('turbo:load', function () {
 });
 
 
-
+/*
 document.addEventListener('turbo:load', function() {
-    document.querySelector('footer .navbar-brand').addEventListener('click', function(e) {
+    document.querySelector('footer .footer-brand').addEventListener('click', function(e) {
 
         console.log("smooth scroll");
         window.scrollTo({
@@ -50,4 +50,4 @@ document.addEventListener('turbo:load', function() {
             behavior: 'smooth'
         });
     });
-});
+});*/
