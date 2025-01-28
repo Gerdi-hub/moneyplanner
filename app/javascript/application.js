@@ -3,8 +3,6 @@ import "jquery"
 
 import "@hotwired/turbo-rails"
 import "controllers"
-import "select2"
-import "./select2"
 import "@popperjs/core"
 import "bootstrap"
 import "chartkick"

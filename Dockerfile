@@ -17,6 +17,9 @@ WORKDIR /rails
 # Install base packages
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \
+    # Install Node.js (required for Rails to compile assets)
+    url -sL https://deb.nodesource.com/setup_18.19.1 | bash - && \
+    apt-get install -y nodejs && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set production environment
