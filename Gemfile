@@ -73,7 +73,7 @@ gem "devise"
 gem "bootstrap", "~> 5.3.0"
 
 # RSpec for testing
-gem "rspec-rails", "~> 6.0", group: [ :development, :test ]
+gem "rspec-rails", "~> 7.1", group: [ :development, :test ]
 
 # FactoryBot for test factories
 gem "factory_bot_rails", "~> 6.2", group: [ :development, :test ]
