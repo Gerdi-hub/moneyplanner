@@ -13,7 +13,6 @@
               <input type="checkbox" class="form-check-input me-2 year-checkbox" id="select_all_year_<%= year %>"
                      data-year="<%= year %>">
               <span class="d-inline m-0 fs-5 fw-bold"><%= year %></span>
-
               <div id="year<%= year %>">
                 <% months.each do |month| %>
                   <div class="form-check">
@@ -21,8 +20,8 @@
                            type="checkbox"
                            name="months[]"
                            id="month_<%= month %>"
-                           value="<%= month.strftime("%m-%Y") %>"
-                           <%= params[:months]&.include?(month.strftime("%m-%Y")) ? "checked" : "" %>>
+                           value="<%= month %>"
+                           <%= params[:months]&.include?(month) ? "checked" : "" %>>
 
                     <label class="form-check-label" for="month_<%= month %>">
                       <%= month.strftime("%B") %>
@@ -45,7 +44,7 @@
         <tr>
           <th>Type</th>
           <% @monthly_data.keys.each do |month| %>
-            <th><%= month %></th>
+            <th><%= Date.strptime(month, '%m-%Y').strftime('%B %Y')%></th>
           <% end %>
         </tr>
         </thead>

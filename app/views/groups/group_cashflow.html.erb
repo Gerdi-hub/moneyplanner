@@ -31,12 +31,10 @@
             <label>Select months:</label>
             <div class="row">
               <% if @available_months.present? %>
-                <% Rails.logger.debug("Available months class: #{@available_months.class}") %>
-                <% Rails.logger.debug("First available month: #{@available_months.first.inspect}") %>
                 <% @available_months.each do |year, months| %>
                   <div class="col">
                     <div class="form-group">
-                      <input type="checkbox" class="form-check-input me-2" id="select_all_year_<%= year %>"
+                      <input type="checkbox" class="form-check-input me-2 year-checkbox" id="select_all_year_<%= year %>"
                              data-year="<%= year %>">
                       <span class="d-inline m-0 fs-5 fw-bold"><%= year %></span>
                       <div id="year<%= year %>">
@@ -46,7 +44,8 @@
                                    type="checkbox"
                                    name="months[]"
                                    id="month_<%= month %>"
-                                   value="<%= month %>">
+                                   value="<%= month %>"
+                                   <%= params[:months]&.include?(month) ? "checked" : "" %>>
 
                             <label class="form-check-label" for="month_<%= month %>">
                               <%= Date.strptime(month, '%m-%Y').strftime('%B') %>
@@ -98,13 +97,59 @@
               </tfoot>
             </table>
 
-            <%= line_chart(
-                  @base_cashflows
-                    .group(:type_name)
-                    .group_by_month(:date)
-                    .sum(:amount)
-                    .transform_keys { |(type_name, date)| [type_name || "Unspecified", date] }
-                ) %>
+
+            <div class=" my-5">
+
+              <h2>Group cashflow chart</h2>
+              <%= column_chart(
+                    @base_cashflows
+                      .group(:type_name)
+                      .group_by_month(:date)
+                      .sum(:amount)
+                      .transform_keys { |(type_name, date)| [type_name || "Unspecified", date] }
+                  ) %>
+
+            </div>
+            <% selected_months = params[:months] %>
+            <% @group.memberships.each do |member| %>
+              <div class=" my-5 pt-5">
+                <hr  class="border-5 border-top border-secondary">
+
+                <h2> <%= member.user.username %> cashflow chart </h2>
+                <% user_cashflow = Cashflow.where(user_id: member.user_id) %>
+                <% if selected_months.present? %>
+                  <% user_cashflow = user_cashflow.where(
+                    "strftime('%m-%Y', date) IN (?)",
+                    selected_months
+                  ) %>
+                  <%else %>
+                <% end %>
+
+
+                <%= column_chart(
+                      user_cashflow
+                        .group(:type_name)
+                        .group_by_month(:date)
+                        .sum(:amount)
+                        .transform_keys { |(type_name, date)| [type_name || "Unspecified", date] }
+                    ) %>
+              </div>
+            <% end %>
+            <hr  class="border-5 border-top border-secondary">
+              <h2>Pie chart for group expenses</h2>
+
+              <%= pie_chart(
+                    @base_cashflows
+                      .where(credit_debit: "credit")
+                      .group(:type_name)
+                      .sum(:amount)
+                      .transform_keys { |type_name| [type_name || "Unspecified"] },
+                    donut: true,
+                    legend: "left" ,
+                  )%>
+
+
+            <br><br>
           <% end %>
         <% else %>
           <p>No group selected.</p>
