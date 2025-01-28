@@ -106,14 +106,15 @@
                       .group(:type_name)
                       .group_by_month(:date)
                       .sum(:amount)
-                      .transform_keys { |(type_name, date)| [type_name || "Unspecified", date] }
+                      .transform_keys { |(type_name, date)| [type_name || "Unspecified", date] },
+                    legend: "right"
                   ) %>
 
             </div>
             <% selected_months = params[:months] %>
             <% @group.memberships.each do |member| %>
               <div class=" my-5 pt-5">
-                <hr  class="border-5 border-top border-secondary">
+                <hr class="border-5 border-top border-secondary">
 
                 <h2> <%= member.user.username %> cashflow chart </h2>
                 <% user_cashflow = Cashflow.where(user_id: member.user_id) %>
@@ -122,7 +123,7 @@
                     "strftime('%m-%Y', date) IN (?)",
                     selected_months
                   ) %>
-                  <%else %>
+                <% else %>
                 <% end %>
 
 
@@ -131,22 +132,38 @@
                         .group(:type_name)
                         .group_by_month(:date)
                         .sum(:amount)
-                        .transform_keys { |(type_name, date)| [type_name || "Unspecified", date] }
+                        .transform_keys { |(type_name, date)| [type_name || "Unspecified", date] },
+                      legend: "right"
                     ) %>
               </div>
             <% end %>
-            <hr  class="border-5 border-top border-secondary">
-              <h2>Pie chart for group expenses</h2>
+            <hr class="border-5 border-top border-secondary">
+            <h2>Credit Cashflows by type</h2>
 
-              <%= pie_chart(
-                    @base_cashflows
-                      .where(credit_debit: "credit")
-                      .group(:type_name)
-                      .sum(:amount)
-                      .transform_keys { |type_name| [type_name || "Unspecified"] },
-                    donut: true,
-                    legend: "left" ,
-                  )%>
+            <%= pie_chart(
+                  @base_cashflows
+                    .where(credit_debit: "credit")
+                    .group(:type_name)
+                    .sum(:amount)
+                    .transform_keys { |type_name| [type_name || "Unspecified"] },
+                  donut: true,
+                  legend: "right",
+                ) %>
+            <hr class="border-5 border-top border-secondary">
+            <h2>Credit Cashflows by Member</h2>
+            <%= bar_chart(
+                  @group.memberships.map do |membership|
+                    {
+                      name: membership.user.username,
+                      data: Cashflow
+                        .where(user_id: membership.user_id, credit_debit: "credit")
+                        .group_by_month(:date)
+                        .sum(:amount)
+                    }
+                  end,
+                  stacked: true,
+                  legend: "right",
+                ) %>
 
 
             <br><br>

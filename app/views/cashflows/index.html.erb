@@ -24,7 +24,7 @@
 
               <div class="collapse mt-2" id="year<%= year %>">
                 <div class="ms-4">
-                  <% months.each do |month| %>
+                  <% months.sort_by(&:month).each do |month| %>
                     <div class="form-check">
                       <input class="form-check-input month-checkbox"
                              type="checkbox"

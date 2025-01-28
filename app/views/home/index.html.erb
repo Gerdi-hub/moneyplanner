@@ -14,7 +14,7 @@
                      data-year="<%= year %>">
               <span class="d-inline m-0 fs-5 fw-bold"><%= year %></span>
               <div id="year<%= year %>">
-                <% months.each do |month| %>
+                <% months.sort_by(&:month).each do |month| %>
                   <div class="form-check">
                     <input class="form-check-input month-checkbox"
                            type="checkbox"
