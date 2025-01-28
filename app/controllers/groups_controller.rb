@@ -1,18 +1,18 @@
 class GroupsController < ApplicationController
-  before_action :authenticate_user!, only: [:new, :create, :join, :index, :show, :destroy]
-  before_action :set_group, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [ :new, :create, :join, :index, :show, :destroy ]
+  before_action :set_group, only: [ :show, :edit, :update, :destroy ]
 
 
   def index
     @groups = Group.all
   end
 
-  def edit;
+  def edit
   end
 
   def update
     if @group.update(group_params)
-      redirect_to group_path(@group), notice: 'Group was successfully updated.'
+      redirect_to group_path(@group), notice: "Group was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end

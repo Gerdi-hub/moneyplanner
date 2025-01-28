@@ -35,12 +35,10 @@ RSpec.describe Cashflow, type: :model do
     cashflow = build(:cashflow, user: user)
     expect(cashflow).to be_valid
   end
-  
+
   it "assignes correct type_name" do
     create(:keyword, name: "test_keyword", type_name: "test_type")
     cashflow = create(:cashflow, description: "test_keyword")
     expect(cashflow.type_name).to eq("test_type")
-
   end
-
 end

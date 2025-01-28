@@ -1,14 +1,14 @@
 class CashflowsController < ApplicationController
   require "csv"
   before_action :authenticate_user!
-  before_action :set_cashflow, only: [:update, :destroy]
-  before_action :ensure_owner, only: [:update, :destroy]
+  before_action :set_cashflow, only: [ :update, :destroy ]
+  before_action :ensure_owner, only: [ :update, :destroy ]
 
   def index
     @current_user = current_user
     @user_cashflows = current_user.cashflows.active
 
-    @available_years = @user_cashflows.distinct.pluck(Arel.sql("strftime('%Y', date)")).sort.reverse.map {|year| Date.strptime(year, " %Y") }
+    @available_years = @user_cashflows.distinct.pluck(Arel.sql("strftime('%Y', date)")).sort.reverse.map { |year| Date.strptime(year, " %Y") }
     @available_months = @user_cashflows.distinct.pluck(Arel.sql("strftime('%m-%Y', date)")).sort.reverse.map { |month| Date.strptime(month, "%m-%Y") }
 
     if params[:years].present?
@@ -32,7 +32,6 @@ class CashflowsController < ApplicationController
     @monthly_data = @cashflows.group_by do |cashflow|
       cashflow.date.strftime("%m-%Y")
     end.transform_values do |cashflows|
-
       types_data = cashflows.group_by(&:type_name).transform_values do |grouped_cashflows|
         grouped_cashflows.sum(&:amount)
       end
@@ -137,13 +136,13 @@ class CashflowsController < ApplicationController
 
       if bank == :seb
         date = Date.strptime(row["Kuupäev"], "%d.%m.%Y") rescue nil
-        description = [row["Saaja/maksja nimi"], row["Selgitus"]].compact.join(" ")
+        description = [ row["Saaja/maksja nimi"], row["Selgitus"] ].compact.join(" ")
         amount = row["Summa"].gsub(",", ".").to_f
         debit_credit = row["Deebet/Kreedit (D/C)"]
       elsif bank == :swedbank
-        next if ["K2", "LS", "AS"].include?(row["Tehingu tüüp"])
+        next if [ "K2", "LS", "AS" ].include?(row["Tehingu tüüp"])
         date = Date.strptime(row["Kuupäev"], "%d.%m.%Y") rescue nil
-        description = [row["Saaja/Maksja"], row["Selgitus"]].compact.join(" ")
+        description = [ row["Saaja/Maksja"], row["Selgitus"] ].compact.join(" ")
         amount = row["Summa"].gsub(",", ".").to_f
         debit_credit = row["Deebet/Kreedit"]
       end
@@ -158,5 +157,4 @@ class CashflowsController < ApplicationController
       )
     end
   end
-
 end

@@ -25,6 +25,4 @@ RSpec.describe Keyword, type: :model do
     keyword = build(:keyword, type_name: Faker::Lorem.characters(number: 200))
     expect(keyword).not_to be_valid
   end
-
-
 end

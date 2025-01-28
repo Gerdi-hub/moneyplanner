@@ -71,6 +71,5 @@ RSpec.describe 'Keywords', type: :request do
       patch keyword_path(keyword), params: { keyword: invalid_attributes }
       assert_response :unprocessable_entity
     end
-
   end
 end

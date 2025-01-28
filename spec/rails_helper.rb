@@ -94,6 +94,4 @@ RSpec.configure do |config|
       with.library :active_record
     end
   end
-
-
 end

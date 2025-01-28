@@ -34,4 +34,3 @@ class Cashflow < ApplicationRecord
     self.type_name = matching_keyword&.type_name
   end
 end
-

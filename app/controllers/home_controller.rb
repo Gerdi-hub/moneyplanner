@@ -1,5 +1,4 @@
 class HomeController < ApplicationController
-
   def index
     if current_user.present?
       @current_user = current_user
@@ -49,9 +48,7 @@ class HomeController < ApplicationController
       end
 
 
-      @row_labels = @monthly_data.values.flat_map(&:keys).uniq.reject { |label| ["Debit Total", "Credit Total", "Difference"].include?(label) }
+      @row_labels = @monthly_data.values.flat_map(&:keys).uniq.reject { |label| [ "Debit Total", "Credit Total", "Difference" ].include?(label) }
     end
-
   end
-
 end
