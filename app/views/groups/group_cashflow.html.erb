@@ -25,6 +25,11 @@
       <div class="col-5">
         <% if @group %>
           <h3><%= @group.name %></h3>
+          <p>Members:
+            <% members = @group.users.map(&:username).join(', ') %>
+            <%= members %>
+          </p>
+          <hr class="border-2 border-top border-secondary">
           <form action="<%= group_cashflow_path %>" method="get">
             <input type="hidden" name="group_id" value="<%= @group.id %>">
 

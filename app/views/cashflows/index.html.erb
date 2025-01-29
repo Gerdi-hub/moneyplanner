@@ -55,9 +55,9 @@
 
         <div>
           <%= form.label :file, "Upload CSV File" %>
-          <%= form.file_field :file, required: true %>
+          <%= form.file_field :file, required: true, class: "form-control"  %>
         </div>
-        <%= form.submit "Upload", class: "btn btn-outline-secondary btn-sm me-2" %>
+        <%= form.submit "Upload", class: "btn btn-outline-secondary btn-sm my-3" %>
       <% end %>
     </div>
   </div>

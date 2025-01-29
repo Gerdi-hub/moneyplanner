@@ -13,11 +13,12 @@ class KeywordsController < ApplicationController
   def create
     @keyword = Keyword.new(keyword_params)
     if @keyword.save
+      update_cashflows
       redirect_to keywords_path, notice: "Keyword added successfully!"
     else
       respond_to do |format|
         format.html { render :new, status: :unprocessable_entity }
-        end
+      end
     end
   end
 
@@ -44,5 +45,12 @@ class KeywordsController < ApplicationController
 
   def keyword_params
     params.require(:keyword).permit(:name, :type_name)
+  end
+
+  def update_cashflows
+    all_cashflows = Cashflow.where(type_name: nil)
+    all_cashflows.each do |cashflow|
+      cashflow.save
+    end
   end
 end

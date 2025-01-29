@@ -5,7 +5,7 @@
 <h2>My Groups</h2>
 
   <div class="table-responsive">
-<% if current_user.memberships.empty? %>
+<% if current_user.memberships.empty? && Group.where(user: current_user).empty? %>
   <p>No groups available.</p>
 <% else %>
       <table class="table">
