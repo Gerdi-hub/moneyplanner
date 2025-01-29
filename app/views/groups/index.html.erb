@@ -17,8 +17,8 @@
         </thead>
         <tbody>
 
-        <% all_groups = current_user.memberships.map(&:group) + Group.where(user: current_user).to_a %>
-
+        <% all_groups = Group.where(user: current_user).to_a + current_user.memberships.map(&:group)  %>
+        <% Rails.logger.info "All Groups: #{all_groups.inspect}" %>
         <% all_groups.uniq.each do |group| %>
           <tr>
             <td>
